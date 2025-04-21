@@ -31,14 +31,11 @@ class FormActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Použitie setContent pre Compose
         setContent {
-            // Komponenty Compose pre zobrazenie obsahu
             FormScreen()
         }
     }
 
-    // ✅ TopBar s názvom aplikácie a šípkou späť
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun TopBar(modifier: Modifier = Modifier) {
@@ -57,7 +54,6 @@ class FormActivity : ComponentActivity() {
         )
     }
 
-    // ✅ Formulár so základným textovým poľom
     @Composable
     fun createStoreForm(modifier: Modifier = Modifier) {
         Column(modifier = modifier.fillMaxWidth(),
@@ -83,27 +79,27 @@ class FormActivity : ComponentActivity() {
                 onValueChange = {},
                 label = { Text("Názov obchodu") },
 
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                modifier = Modifier.align(Alignment.CenterHorizontally).padding(0.dp, 2.dp)
+
 
             )
+
             TextField(value = "",
                 onValueChange = {},
                 label = { Text("EAN Kód") },
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                modifier = Modifier.align(Alignment.CenterHorizontally).padding(0.dp,2.dp)
 
             )
             TextField(value = "",
                 onValueChange = {},
                 label = { Text("Názov Položky") },
 
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                modifier = Modifier.align(Alignment.CenterHorizontally).padding(0.dp,5.dp)
 
             )
             TextField(value = "",
                 onValueChange = {},
                 label = { Text("Cena") },
-//                keyboardOptions = androidx.compose.ui.text.input.KeyboardOptions.Default.copy(
-//                    keyboardType = KeyboardType.Number),
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Number
                 ),
