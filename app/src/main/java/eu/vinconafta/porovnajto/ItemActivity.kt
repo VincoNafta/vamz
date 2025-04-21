@@ -31,6 +31,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import eu.vinconafta.porovnajto.ui.datas.Item
+
 
 class ItemActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +65,7 @@ class ItemActivity : AppCompatActivity() {
     }
 
     @Composable
-    fun ShowDetailItem(modifier: Modifier = Modifier) {
+    fun ShowDetailItem(item: Item,modifier: Modifier = Modifier) {
         Column {
 
 
@@ -76,16 +78,16 @@ class ItemActivity : AppCompatActivity() {
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.horalky),
-                        contentDescription = "Horalky",
+                        contentDescription = item.name,
                         modifier = modifier.height(240.dp)
                     )
                     Text(
-                        text = "Horalky",
+                        text = item.name.uppercase(),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = "Výrobca: Sedita",
+                        text = "Výrobca: ${item.producer}" ,
                         fontSize = 15.sp
                     )
                 }
@@ -121,7 +123,7 @@ class ItemActivity : AppCompatActivity() {
     fun ItemPage() {
         Column (modifier = Modifier) {
             TopBar()
-            ShowDetailItem()
+            ShowDetailItem(Item("Horalky", "Sedita"))
         }
 
     }

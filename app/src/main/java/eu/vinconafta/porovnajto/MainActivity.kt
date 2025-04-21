@@ -4,26 +4,22 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -39,10 +35,12 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import eu.vinconafta.porovnajto.ui.datas.Category
+import eu.vinconafta.porovnajto.ui.datas.Item
+import eu.vinconafta.porovnajto.ui.datas.StoreItem
 import eu.vinconafta.porovnajto.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -56,18 +54,18 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Scaffold(
-                        topBar = { MainTopBar() }, // Pridáme TopAppBar na vrch
-                        content = { paddingValues ->
+                        topBar = { MainTopBar() },
+                        content = {
+                            paddingValues ->
                             val sampleCards = listOf(
-                                CardItem(R.drawable.kaufland, "Kaufland"),
-                                CardItem(R.drawable.tesco, "Tesco"),
-                                CardItem(R.drawable.billa, "BILLA"),
-                                CardItem(R.drawable.lidl, "LIDL")
+                                StoreItem(R.drawable.kaufland, "Kaufland"),
+                                StoreItem(R.drawable.tesco, "Tesco"),
+                                StoreItem(R.drawable.billa, "BILLA"),
+                                StoreItem(R.drawable.lidl, "LIDL")
                             )
-                            // Aplikujeme padding na obsah, aby sa neprekrýval s lištou
                             CardGrid(
                                 cardItems = sampleCards,
-                                modifier = Modifier.padding(paddingValues) // Opravené tu!
+                                modifier = Modifier.padding(paddingValues)
                             )
                         }
                     )
@@ -79,7 +77,7 @@ class MainActivity : ComponentActivity() {
 
 
 
-data class CardItem(val imageRes: Int, val text: String)
+
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -136,7 +134,7 @@ fun MainTopBar() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CardWithImageAndText(item: CardItem) {
+fun CardWithImageAndText(item: StoreItem) {
     Card(
         modifier = Modifier
             .padding(10.dp)
@@ -147,8 +145,8 @@ fun CardWithImageAndText(item: CardItem) {
     ) {
         Column {
             Image(
-                painter = painterResource(id = item.imageRes),
-                contentDescription = item.text,
+                painter = painterResource(id = item.icon),
+                contentDescription = item.storeName,
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -156,7 +154,7 @@ fun CardWithImageAndText(item: CardItem) {
                     .padding(8.dp)
             )
             Text(
-                text = item.text,
+                text = item.storeName,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
@@ -165,14 +163,59 @@ fun CardWithImageAndText(item: CardItem) {
         }
     }
 }
+@Composable
+fun ProductList(items: List<Item>, modifier: Modifier = Modifier) {
+
+    Column {
+        items.forEach { item ->
+            ListItem(headlineContent = {
+                Text(text = item.name)
+                },
+                modifier = Modifier
+                    .padding(8.dp)
+                    .border(
+                        width = 1.dp,
+                        color = Color.Gray,
+                        shape = RoundedCornerShape(8.dp)
+                    )
+                    .clickable { }
+                    .padding(8.dp)
+            )
+
+        }
+    }
+}
 
 @Composable
-fun CardGrid(cardItems: List<CardItem>, modifier: Modifier = Modifier) {
+fun CategoryList(categoryList: List<Category>, modifier: Modifier = Modifier) {
+
+    Column {
+        categoryList.forEach { category ->
+            ListItem(headlineContent = {
+                Text(text = category.name)
+            },
+                modifier = Modifier
+                    .padding(8.dp)
+                    .border(
+                        width = 1.dp,
+                        color = Color.Gray,
+                        shape = RoundedCornerShape(8.dp)
+                    )
+                    .clickable { }
+                    .padding(8.dp)
+            )
+
+        }
+    }
+}
+
+@Composable
+fun CardGrid(cardItems: List<StoreItem>, modifier: Modifier = Modifier) {
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2), // 2 karty vedľa seba
+        columns = GridCells.Fixed(2),
         modifier = modifier
-            .fillMaxSize() // Aby grid vyplnil celú šírku a výšku
-            .padding(8.dp), // Aplikuje padding na celý grid
+            .fillMaxSize()
+            .padding(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
@@ -186,12 +229,34 @@ fun CardGrid(cardItems: List<CardItem>, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewCardGrid() {
-    val sampleCards = listOf(
-        CardItem(R.drawable.ic_launcher_background, "Karta 1"),
-        CardItem(R.drawable.ic_launcher_background, "Karta 2"),
-        CardItem(R.drawable.ic_launcher_background, "Karta 3"),
-        CardItem(R.drawable.ic_launcher_background, "Karta 4"),
-        CardItem(R.drawable.ic_launcher_background, "Karta 5")
+//    val items = listOf(Item("Rožok Štandard", "Lippek"),
+//        Item("Polohrubá Múka", "Mlyn Pohronoský Ruskov"),
+//        Item("Chlieb Ražný", "Pekárne a cukrárne Rusina Dolný Kubín"),
+//        Item("Kryšálový Cukor", "Považšký Cukor a.s."),
+//        Item("Jägermeister", "Massvoll Geniessen GmbH."),
+//        Item("Fusilli", "GORAL, spol. s r.o."),
+//        Item("Džús Caprio Multivitamin", "Grupa Maspex Polska"),
+//        Item("Minerálka Budiš", "BudiŠ a.s."),
+//        Item("Plienky Pampers", "Procter&Gamble")
+//    )
+//    ProductList(items = items)
+    val categories = listOf(
+        Category("Pečivo"),
+        Category("Drogeria"),
+        Category("Alkohol"),
+        Category("Ovocie"),
+        Category("Zelenina"),
+        Category("Nealkoholické Nápoje"),
+        Category("Trvanlivé potraviny"),
+        Category("Mliečne výrobky")
     )
-    CardGrid(cardItems = sampleCards)
+    CategoryList(categoryList = categories)
+//    val sampleCards = listOf(
+//        StoreItem(R.drawable.ic_launcher_background, "Karta 1"),
+//        StoreItem(R.drawable.ic_launcher_background, "Karta 2"),
+//        StoreItem(R.drawable.ic_launcher_background, "Karta 3"),
+//        StoreItem(R.drawable.ic_launcher_background, "Karta 4"),
+//        StoreItem(R.drawable.ic_launcher_background, "Karta 5")
+//    )
+//    CardGrid(cardItems = sampleCards)
 }
