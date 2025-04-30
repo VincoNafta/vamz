@@ -23,9 +23,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import eu.vinconafta.porovnajto.mvvms.FormItemViewModel
 
 class FormActivity : ComponentActivity() {
 
@@ -41,7 +44,7 @@ class FormActivity : ComponentActivity() {
     fun TopBar(modifier: Modifier = Modifier) {
         TopAppBar(
             title = {
-                Text("Porovnaj.to", color = Color.White) // Názov aplikácie
+                Text("Porovnaj.to", color = Color.White)
             },
             navigationIcon = {
                 IconButton(onClick = { /* Akcia pre späť */ }) {
@@ -71,34 +74,46 @@ class FormActivity : ComponentActivity() {
     }
 
     @Composable
-    fun createItem(modifier: Modifier = Modifier) {
+    fun createItem(
+        insertFormUi: FormItemViewModel = viewModel()
+        ,modifier: Modifier = Modifier) {
+
+        val formData = insertFormUi.formState
+
         Column(modifier = modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.Center) {
 
-            TextField(value = "",
-                onValueChange = {},
+            TextField(value = formData.storeName,
+                onValueChange = {insertFormUi.updateStoreName(it)},
                 label = { Text("Názov obchodu") },
-
-                modifier = Modifier.align(Alignment.CenterHorizontally).padding(0.dp, 2.dp)
+                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(0.dp, 2.dp)
 
 
             )
 
-            TextField(value = "",
-                onValueChange = {},
+            TextField(value = if (formData.ean == 0L) "" else formData.ean.toString(),
+                onValueChange = {insertFormUi.updateEAN(it.toLongOrNull() ?: 0L)},
                 label = { Text("EAN Kód") },
-                modifier = Modifier.align(Alignment.CenterHorizontally).padding(0.dp,2.dp)
+                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(0.dp, 2.dp)
 
             )
-            TextField(value = "",
-                onValueChange = {},
+            TextField(value = formData.itemName,
+                onValueChange = {insertFormUi.updateItemName(it)},
                 label = { Text("Názov Položky") },
-
-                modifier = Modifier.align(Alignment.CenterHorizontally).padding(0.dp,5.dp)
+                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next),
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(0.dp, 5.dp)
 
             )
-            TextField(value = "",
-                onValueChange = {},
+            TextField(value = if (formData.price == 0.0) "" else formData.price.toString(),
+                onValueChange = {insertFormUi.updatePrice(it.toDoubleOrNull() ?: 0.0)},
                 label = { Text("Cena") },
                 keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Number
