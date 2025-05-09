@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="categories">KATGÓRIE</string>
+    <string name="sets">ZOZNAMY</string>
+    <string name="stores">OBCHODY</string>
+    <string name="products">PRODUKTY</string>
 </resources>
