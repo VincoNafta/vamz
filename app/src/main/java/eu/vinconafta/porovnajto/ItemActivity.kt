@@ -123,7 +123,7 @@ class ItemActivity : AppCompatActivity() {
     fun ItemPage() {
         Column (modifier = Modifier) {
             TopBar()
-            ShowDetailItem(Item("Horalky", "Sedita"))
+            ShowDetailItem(Item(name="Horalky", producer = "Sedita"))
         }
 
     }

@@ -2,11 +2,12 @@ package eu.vinconafta.porovnajto.ui.datas
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-
-
-@Entity(tableName = "category")
-data class Category(
+import java.sql.Date
+@Entity(tableName = "price")
+data class Price(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val name: String)
+    val startDate: Date,
+    val endDate: Date,
+    val currency: Currency
 
-
+)

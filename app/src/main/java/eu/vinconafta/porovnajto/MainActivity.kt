@@ -1,6 +1,7 @@
 package eu.vinconafta.porovnajto
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -31,11 +32,16 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -45,9 +51,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.vinconafta.porovnajto.mvvms.TopBarViewModel
+import eu.vinconafta.porovnajto.ui.Rooms.AppDatabase
 import eu.vinconafta.porovnajto.ui.datas.Category
 import eu.vinconafta.porovnajto.ui.datas.Item
 import eu.vinconafta.porovnajto.ui.datas.StoreItem
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,13 +78,16 @@ fun MainScreen(
             MainTopBar(viewModel = topBarViewModel)
         },
         content = { paddingValues ->
+            val context = LocalContext.current
             when (topBarViewModel.selectedSection) {
                 TopBarSection.Obchody -> {
                     val sampleCards = listOf(
                         StoreItem(R.drawable.kaufland, "Kaufland"),
                         StoreItem(R.drawable.tesco, "Tesco"),
                         StoreItem(R.drawable.billa, "BILLA"),
-                        StoreItem(R.drawable.lidl, "LIDL")
+                        StoreItem(R.drawable.lidl, "LIDL"),
+                        StoreItem(R.drawable.jednota, "Jednota"),
+                        StoreItem(R.drawable.terno, "Terno")
                     )
                     CardGrid(
                         cardItems = sampleCards,
@@ -84,31 +96,40 @@ fun MainScreen(
                 }
 
                 TopBarSection.Kategorie -> {
-                    val categories = listOf(
-                        Category("Pečivo"),
-                        Category("Drogeria"),
-                        Category("Alkohol"),
-                        Category("Ovocie"),
-                        Category("Zelenina"),
-                        Category("Nealkoholické Nápoje"),
-                        Category("Trvanlivé potraviny"),
-                        Category("Mliečne výrobky")
-                    )
+
+                    val categoryDao = remember { AppDatabase.getDatabase(context).categoryDao() }
+                    val categoryFlow = remember { categoryDao.getAllCategories() }
+                    val categories by categoryFlow.collectAsState(initial = emptyList())
+//                    val categories = listOf(
+//                        Category("Pečivo"),
+//                        Category("Drogeria"),
+//                        Category("Alkohol"),
+//                        Category("Ovocie"),
+//                        Category("Zelenina"),
+//                        Category("Nealkoholické Nápoje"),
+//                        Category("Trvanlivé potraviny"),
+//                        Category("Mliečne výrobky")
+//                    )
                     CategoryList(categoryList = categories)
                 }
 
                 TopBarSection.Zoznamy -> {
-                    val items = listOf(
-                        Item("Rožok Štandard", "Lippek"),
-                        Item("Polohrubá Múka", "Mlyn Pohronoský Ruskov"),
-                        Item("Chlieb Ražný", "Pekárne a cukrárne Rusina Dolný Kubín"),
-                        Item("Kryšálový Cukor", "Považšký Cukor a.s."),
-                        Item("Jägermeister", "Massvoll Geniessen GmbH."),
-                        Item("Fusilli", "GORAL, spol. s r.o."),
-                        Item("Džús Caprio Multivitamin", "Grupa Maspex Polska"),
-                        Item("Minerálka Budiš", "BudiŠ a.s."),
-                        Item("Plienky Pampers", "Procter&Gamble")
-                    )
+
+
+                    // Získa DAO raz - bezpečne cez remember
+                    val itemDao = remember { AppDatabase.getDatabase(context).itemDao() }
+                    val itemsFlow = remember { itemDao.getAllItems() }
+                    val items by itemsFlow.collectAsState(initial = emptyList())
+
+                    // Log pre kontrolu
+//                    LaunchedEffect(items) {
+//                        Log.d("DEBUG", "Počet položiek: ${items.size}")
+//                        items.forEach {
+//                            Log.d("DEBUG", "Item: ${it.name}")
+//                        }
+//                    }
+
+                    // Zobrazí produktový zoznam
                     ProductList(items = items)
                 }
 
@@ -291,17 +312,17 @@ fun PreviewCardGrid() {
 //        Item("Plienky Pampers", "Procter&Gamble")
 //    )
 //    ProductList(items = items)
-    val categories = listOf(
-        Category("Pečivo"),
-        Category("Drogeria"),
-        Category("Alkohol"),
-        Category("Ovocie"),
-        Category("Zelenina"),
-        Category("Nealkoholické Nápoje"),
-        Category("Trvanlivé potraviny"),
-        Category("Mliečne výrobky")
-    )
-    CategoryList(categoryList = categories)
+//    val categories = listOf(
+//        Category("Pečivo"),
+//        Category("Drogeria"),
+//        Category("Alkohol"),
+//        Category("Ovocie"),
+//        Category("Zelenina"),
+//        Category("Nealkoholické Nápoje"),
+//        Category("Trvanlivé potraviny"),
+//        Category("Mliečne výrobky")
+//    )
+//    CategoryList(categoryList = categories)
 //    val sampleCards = listOf(
 //        StoreItem(R.drawable.ic_launcher_background, "Karta 1"),
 //        StoreItem(R.drawable.ic_launcher_background, "Karta 2"),
