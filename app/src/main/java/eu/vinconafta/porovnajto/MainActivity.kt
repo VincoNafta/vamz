@@ -1,6 +1,5 @@
 package eu.vinconafta.porovnajto
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -49,7 +48,6 @@ import eu.vinconafta.porovnajto.mvvms.TopBarViewModel
 import eu.vinconafta.porovnajto.ui.datas.Category
 import eu.vinconafta.porovnajto.ui.datas.Item
 import eu.vinconafta.porovnajto.ui.datas.StoreItem
-import eu.vinconafta.porovnajto.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
