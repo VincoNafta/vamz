@@ -9,13 +9,16 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -126,7 +129,6 @@ fun MainTopBar(viewModel: TopBarViewModel = viewModel()) {
     val selected = viewModel.selectedSection
 
     Column {
-        // Hlavná horná lišta
         TopAppBar(
             title = {
                 Text(
@@ -212,12 +214,14 @@ fun CardWithImageAndText(item: StoreItem) {
 
 @Composable
 fun ProductList(items: List<Item>, modifier: Modifier = Modifier) {
-
-    Column {
-        items.forEach { item ->
-            ListItem(headlineContent = {
-                Text(text = item.name)
-            },
+    LazyColumn(modifier = modifier,
+        contentPadding = PaddingValues(top = 30.dp, bottom = 8.dp)
+    ) {
+        items(items) { item ->
+            ListItem(
+                headlineContent = {
+                    Text(text = item.name)
+                },
                 modifier = Modifier
                     .padding(8.dp)
                     .border(
@@ -228,21 +232,23 @@ fun ProductList(items: List<Item>, modifier: Modifier = Modifier) {
                     .clickable { }
                     .padding(8.dp)
             )
-
         }
     }
 }
 
 @Composable
 fun CategoryList(categoryList: List<Category>, modifier: Modifier = Modifier) {
-
-    Column {
-        categoryList.forEach { category ->
-            ListItem(headlineContent = {
-                Text(text = category.name)
-            },
+    LazyColumn(
+        modifier = modifier,
+        contentPadding = PaddingValues(top = 16.dp, bottom = 8.dp)
+    ) {
+        items(categoryList) { category ->
+            ListItem(
+                headlineContent = {
+                    Text(text = category.name)
+                },
                 modifier = Modifier
-                    .padding(8.dp)
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
                     .border(
                         width = 1.dp,
                         color = Color.Gray,
@@ -251,10 +257,10 @@ fun CategoryList(categoryList: List<Category>, modifier: Modifier = Modifier) {
                     .clickable { }
                     .padding(8.dp)
             )
-
         }
     }
 }
+
 
 @Composable
 fun CardGrid(cardItems: List<StoreItem>, modifier: Modifier = Modifier) {
