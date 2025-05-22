@@ -8,6 +8,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -82,12 +83,12 @@ fun MainScreen(
             when (topBarViewModel.selectedSection) {
                 TopBarSection.Obchody -> {
                     val sampleCards = listOf(
-                        StoreItem(R.drawable.kaufland, "Kaufland"),
-                        StoreItem(R.drawable.tesco, "Tesco"),
-                        StoreItem(R.drawable.billa, "BILLA"),
-                        StoreItem(R.drawable.lidl, "LIDL"),
-                        StoreItem(R.drawable.jednota, "Jednota"),
-                        StoreItem(R.drawable.terno, "Terno")
+                        StoreItem( "Kaufland", "kaufland"),
+                        StoreItem( "Tesco", "tesco"),
+                        StoreItem( "BILLA", "billa"),
+                        StoreItem( "LIDL", "lidl"),
+                        StoreItem( "Jednota", "jednota"),
+                        StoreItem( "Terno", "terno")
                     )
                     CardGrid(
                         cardItems = sampleCards,
@@ -121,15 +122,6 @@ fun MainScreen(
                     val itemsFlow = remember { itemDao.getAllItems() }
                     val items by itemsFlow.collectAsState(initial = emptyList())
 
-                    // Log pre kontrolu
-//                    LaunchedEffect(items) {
-//                        Log.d("DEBUG", "Počet položiek: ${items.size}")
-//                        items.forEach {
-//                            Log.d("DEBUG", "Item: ${it.name}")
-//                        }
-//                    }
-
-                    // Zobrazí produktový zoznam
                     ProductList(items = items)
                 }
 
@@ -182,6 +174,8 @@ fun MainTopBar(viewModel: TopBarViewModel = viewModel()) {
     }
 }
 
+
+
 @Composable
 fun TopBarButton(
     section: TopBarSection,
@@ -202,6 +196,9 @@ fun TopBarButton(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardWithImageAndText(item: StoreItem) {
+    val context = LocalContext.current
+    val resId = remember(item.iconName) { item.getResId(context) }
+
     Card(
         modifier = Modifier
             .padding(10.dp)
@@ -211,15 +208,29 @@ fun CardWithImageAndText(item: StoreItem) {
         onClick = { }
     ) {
         Column {
-            Image(
-                painter = painterResource(id = item.icon),
-                contentDescription = item.storeName,
-                contentScale = ContentScale.Fit,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(170.dp)
-                    .padding(8.dp)
-            )
+            if (resId != 0) {
+                Image(
+                    painter = painterResource(id = resId),
+                    contentDescription = item.storeName,
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(170.dp)
+                        .padding(8.dp)
+                )
+            } else {
+                // fallback: prázdny Box alebo iný placeholder
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(170.dp)
+                        .padding(8.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text("No Image", color = Color.Gray)
+                }
+            }
+
             Text(
                 text = item.storeName,
                 fontSize = 24.sp,
@@ -230,6 +241,7 @@ fun CardWithImageAndText(item: StoreItem) {
         }
     }
 }
+
 
 @Composable
 fun ProductList(items: List<Item>, modifier: Modifier = Modifier) {

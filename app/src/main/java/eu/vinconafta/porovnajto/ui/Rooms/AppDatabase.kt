@@ -5,17 +5,26 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import eu.vinconafta.porovnajto.ui.daos.CategoryDao
+import eu.vinconafta.porovnajto.ui.daos.CurrencyDao
 import eu.vinconafta.porovnajto.ui.daos.ItemDao
+import eu.vinconafta.porovnajto.ui.daos.PriceDao
 import eu.vinconafta.porovnajto.ui.datas.Category
+import eu.vinconafta.porovnajto.ui.datas.Currency
 import eu.vinconafta.porovnajto.ui.datas.Item
+import eu.vinconafta.porovnajto.ui.datas.Price
 
-@Database(entities = [Item::class, Category::class], version = 2, exportSchema = false)
+@Database(entities =
+[Item::class, Category::class, Currency::class, Price::class],
+    version = 3, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun itemDao(): ItemDao
-
+    abstract fun currencyDao(): CurrencyDao
+    abstract fun priceDao(): PriceDao
 
     abstract fun categoryDao(): CategoryDao
+
+
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null

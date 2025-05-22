@@ -1,3 +1,12 @@
 package eu.vinconafta.porovnajto.ui.datas
 
-data class StoreItem(val icon: Int, val storeName: String)
+import android.content.Context
+
+
+data class StoreItem(
+                     val storeName: String,
+                     val iconName: String) {
+    fun getResId(context: Context): Int {
+        return context.resources.getIdentifier(iconName, "drawable", context.packageName)
+    }
+}
