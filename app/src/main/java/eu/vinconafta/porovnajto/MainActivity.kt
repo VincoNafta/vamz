@@ -1,5 +1,6 @@
 package eu.vinconafta.porovnajto
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -82,16 +83,20 @@ fun MainScreen(
             val context = LocalContext.current
             when (topBarViewModel.selectedSection) {
                 TopBarSection.Obchody -> {
-                    val sampleCards = listOf(
-                        StoreItem( "Kaufland", "kaufland"),
-                        StoreItem( "Tesco", "tesco"),
-                        StoreItem( "BILLA", "billa"),
-                        StoreItem( "LIDL", "lidl"),
-                        StoreItem( "Jednota", "jednota"),
-                        StoreItem( "Terno", "terno")
-                    )
+
+                    val categoryDao = remember { AppDatabase.getDatabase(context).storeDao() }
+                    val categoryFlow = remember { categoryDao.getAll() }
+                    val stores by categoryFlow.collectAsState(initial = emptyList())
+//                    val sampleCards = listOf(
+//                        StoreItem( "Kaufland", "kaufland"),
+//                        StoreItem( "Tesco", "tesco"),
+//                        StoreItem( "BILLA", "billa"),
+//                        StoreItem( "LIDL", "lidl"),
+//                        StoreItem( "Jednota", "jednota"),
+//                        StoreItem( "Terno", "terno")
+//                    )
                     CardGrid(
-                        cardItems = sampleCards,
+                        cardItems = stores,
                         modifier = Modifier.padding(paddingValues)
                     )
                 }
@@ -153,7 +158,6 @@ fun MainTopBar(viewModel: TopBarViewModel = viewModel()) {
             )
         )
 
-        // Druhá lišta s tlačidlami
         Surface(
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier
@@ -245,6 +249,7 @@ fun CardWithImageAndText(item: StoreItem) {
 
 @Composable
 fun ProductList(items: List<Item>, modifier: Modifier = Modifier) {
+    val context = LocalContext.current
     LazyColumn(modifier = modifier,
         contentPadding = PaddingValues(top = 30.dp, bottom = 8.dp)
     ) {
@@ -260,7 +265,12 @@ fun ProductList(items: List<Item>, modifier: Modifier = Modifier) {
                         color = Color.Gray,
                         shape = RoundedCornerShape(8.dp)
                     )
-                    .clickable { }
+                    .clickable {
+                        val intent = Intent(context, ItemActivity::class.java).apply {
+                            putExtra("item", item)
+                        }
+                        context.startActivity(intent)
+                    }
                     .padding(8.dp)
             )
         }
