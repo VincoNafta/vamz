@@ -106,6 +106,7 @@ fun MainScreen(
                     val categoryDao = remember { AppDatabase.getDatabase(context).categoryDao() }
                     val categoryFlow = remember { categoryDao.getAllCategories() }
                     val categories by categoryFlow.collectAsState(initial = emptyList())
+
 //                    val categories = listOf(
 //                        Category("Pečivo"),
 //                        Category("Drogeria"),
@@ -279,6 +280,9 @@ fun ProductList(items: List<Item>, modifier: Modifier = Modifier) {
 
 @Composable
 fun CategoryList(categoryList: List<Category>, modifier: Modifier = Modifier) {
+
+
+
     LazyColumn(
         modifier = modifier,
         contentPadding = PaddingValues(top = 16.dp, bottom = 8.dp)
@@ -295,7 +299,10 @@ fun CategoryList(categoryList: List<Category>, modifier: Modifier = Modifier) {
                         color = Color.Gray,
                         shape = RoundedCornerShape(8.dp)
                     )
-                    .clickable { }
+                    .clickable {
+
+
+                    }
                     .padding(8.dp)
             )
         }

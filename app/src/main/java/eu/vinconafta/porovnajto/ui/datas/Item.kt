@@ -3,6 +3,7 @@ package eu.vinconafta.porovnajto.ui.datas
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import eu.vinconafta.porovnajto.ui.daos.PriceDao
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -17,3 +18,5 @@ data class Item(
     val refToCategory: Int
 
 ): Parcelable
+
+

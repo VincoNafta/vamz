@@ -18,6 +18,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,7 +29,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import eu.vinconafta.porovnajto.ui.Rooms.AppDatabase
 import eu.vinconafta.porovnajto.ui.datas.Item
+import eu.vinconafta.porovnajto.ui.datas.Price
 
 class ItemActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,6 +76,14 @@ class ItemActivity : ComponentActivity() {
 
     @Composable
     fun ShowDetailItem(item: Item, modifier: Modifier = Modifier) {
+        val context = LocalContext.current
+        val priceDao = remember { AppDatabase.getDatabase(context).priceDao() }
+
+        // produceState spustí coroutine na pozadí a spravuje stav ceny
+        val priceState = produceState<Price?>(initialValue = null, item.refToPrice) {
+            value = priceDao.getById(item.refToPrice)
+        }
+
         LazyColumn(
             modifier = modifier.fillMaxWidth()
         ) {
@@ -117,7 +129,9 @@ class ItemActivity : ComponentActivity() {
                         fontWeight = FontWeight.Bold,
                         fontSize = 15.sp
                     )
-                    Text(text = "\t LIDL (0,55€)")
+                    Text(
+                        text = priceState.value?.let { "\t ${it.price} (€)" } ?: "\t Načítavam..."
+                    )
                     Text(
                         text = "Ostatné ponuky",
                         fontWeight = FontWeight.Bold,
@@ -135,6 +149,7 @@ class ItemActivity : ComponentActivity() {
     }
 
 
+
     @Composable
     fun ItemPage(item: Item) {
         val context = LocalContext.current
@@ -143,7 +158,6 @@ class ItemActivity : ComponentActivity() {
         Column(modifier = Modifier) {
             TopBar(
                 onBack = {
-                    // Ak chceš len vrátiť späť do MainActivity:
                     val intent = Intent(context, MainActivity::class.java)
                     context.startActivity(intent)
                     activity?.finish()
