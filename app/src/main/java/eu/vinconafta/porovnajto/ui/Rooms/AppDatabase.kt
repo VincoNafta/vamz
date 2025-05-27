@@ -4,19 +4,19 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import eu.vinconafta.porovnajto.ui.daos.CategoryDao
-import eu.vinconafta.porovnajto.ui.daos.CurrencyDao
-import eu.vinconafta.porovnajto.ui.daos.ItemDao
-import eu.vinconafta.porovnajto.ui.daos.PriceDao
-import eu.vinconafta.porovnajto.ui.daos.StoreDao
-import eu.vinconafta.porovnajto.ui.datas.Category
-import eu.vinconafta.porovnajto.ui.datas.Currency
-import eu.vinconafta.porovnajto.ui.datas.Item
-import eu.vinconafta.porovnajto.ui.datas.Price
-import eu.vinconafta.porovnajto.ui.datas.StoreItem
+import eu.vinconafta.porovnajto.datas.daos.CategoryDao
+import eu.vinconafta.porovnajto.datas.daos.CurrencyDao
+import eu.vinconafta.porovnajto.datas.daos.ItemDao
+import eu.vinconafta.porovnajto.datas.daos.PriceDao
+import eu.vinconafta.porovnajto.datas.daos.StoreDao
+import eu.vinconafta.porovnajto.datas.Category
+import eu.vinconafta.porovnajto.datas.Currency
+import eu.vinconafta.porovnajto.datas.Item
+import eu.vinconafta.porovnajto.datas.Price
+import eu.vinconafta.porovnajto.datas.StoreItem
 
 @Database(entities =
-[StoreItem::class,Item::class, Category::class, Currency::class, Price::class],
+[StoreItem::class, Item::class, Category::class, Currency::class, Price::class],
     version = 5, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 

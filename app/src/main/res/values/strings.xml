@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Porovnaj.to</string>
+    <string name="best_offer">Najlepšia Ponuka</string>
+    <string name="other_offers">Ostatné ponuky</string>
+    <string name="producer">Výrobca</string>
     <string name="categories">KATGÓRIE</string>
     <string name="sets">ZOZNAMY</string>
     <string name="stores">OBCHODY</string>

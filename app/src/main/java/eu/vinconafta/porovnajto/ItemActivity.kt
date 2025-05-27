@@ -25,13 +25,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.vinconafta.porovnajto.ui.Rooms.AppDatabase
-import eu.vinconafta.porovnajto.ui.datas.Item
-import eu.vinconafta.porovnajto.ui.datas.Price
+import eu.vinconafta.porovnajto.datas.Item
+import eu.vinconafta.porovnajto.datas.Price
 
 class ItemActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +61,7 @@ class ItemActivity : ComponentActivity() {
     fun TopBar(modifier: Modifier = Modifier, onBack: () -> Unit) {
         TopAppBar(
             title = {
-                Text("Porovnaj.to", color = Color.White)
+                Text(stringResource(id = R.string.app_name), color = Color.White)
             },
             navigationIcon = {
                 IconButton(onClick = onBack) {
@@ -97,7 +98,7 @@ class ItemActivity : ComponentActivity() {
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Image(
-                            painter = painterResource(id = R.drawable.horalky),
+                            painter = painterResource(id = item.getResId(LocalContext.current)),
                             contentDescription = item.name,
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -110,7 +111,7 @@ class ItemActivity : ComponentActivity() {
                             modifier = Modifier.padding(8.dp)
                         )
                         Text(
-                            text = "Výrobca: ${item.producer}",
+                            text = "${stringResource(id = R.string.producer)}: ${item.producer}",
                             fontSize = 15.sp,
                             modifier = Modifier.padding(bottom = 8.dp, start = 8.dp)
                         )
@@ -125,7 +126,7 @@ class ItemActivity : ComponentActivity() {
                     verticalArrangement = Arrangement.Bottom
                 ) {
                     Text(
-                        text = "Najvýhodnejšia ponuka:",
+                        text = stringResource(id = R.string.best_offer) +" :",
                         fontWeight = FontWeight.Bold,
                         fontSize = 15.sp
                     )
@@ -133,7 +134,7 @@ class ItemActivity : ComponentActivity() {
                         text = priceState.value?.let { "\t ${it.price} (€)" } ?: "\t Načítavam..."
                     )
                     Text(
-                        text = "Ostatné ponuky",
+                        text = stringResource(id = R.string.other_offers),
                         fontWeight = FontWeight.Bold,
                         fontSize = 15.sp,
                         modifier = Modifier.padding(top = 12.dp)

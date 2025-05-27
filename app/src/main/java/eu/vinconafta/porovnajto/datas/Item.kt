@@ -1,9 +1,10 @@
-package eu.vinconafta.porovnajto.ui.datas
+package eu.vinconafta.porovnajto.datas
 
+import android.content.Context
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import eu.vinconafta.porovnajto.ui.daos.PriceDao
+import eu.vinconafta.porovnajto.R
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -17,6 +18,16 @@ data class Item(
     val refToPrice: Int,
     val refToCategory: Int
 
-): Parcelable
+): Parcelable{
+    fun getResId(context: Context): Int {
+        val iconResId = context.resources.getIdentifier(this.icon, "drawable", context.packageName)
+        val finalIconResId = if (iconResId != 0) iconResId else R.drawable.nic
+
+        return finalIconResId
+    }
+}
+
+
+
 
 

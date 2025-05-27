@@ -1,4 +1,4 @@
-package eu.vinconafta.porovnajto.ui.datas
+package eu.vinconafta.porovnajto.datas
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

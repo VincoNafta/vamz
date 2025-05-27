@@ -1,4 +1,4 @@
-package eu.vinconafta.porovnajto.ui.daos
+package eu.vinconafta.porovnajto.datas.daos
 
 
 import androidx.room.Dao
@@ -6,14 +6,14 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import eu.vinconafta.porovnajto.ui.datas.Item
+import eu.vinconafta.porovnajto.datas.Item
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ItemDao {
 
     @Query("SELECT * FROM items")
-    fun getAllItems(): Flow<List<Item>>
+    fun getAll(): Flow<List<Item>>
 
     @Query("SELECT * FROM items where refToCategory = :categoryId")
     fun getAllInCategory(categoryId: Int) : Flow<List<Item>>
