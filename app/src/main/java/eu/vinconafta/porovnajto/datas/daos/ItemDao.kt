@@ -18,6 +18,9 @@ interface ItemDao {
     @Query("SELECT * FROM items where refToCategory = :categoryId")
     fun getAllInCategory(categoryId: Int) : Flow<List<Item>>
 
+    @Query("SELECT * FROM items where id = :itemId")
+    fun getId(itemId: Int): Flow<Item?>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertItem(item: Item)
 

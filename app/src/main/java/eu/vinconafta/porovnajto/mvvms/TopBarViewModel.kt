@@ -11,13 +11,18 @@ import eu.vinconafta.porovnajto.ui.Rooms.AppDatabase
 import eu.vinconafta.porovnajto.datas.Category
 import eu.vinconafta.porovnajto.datas.Item
 import eu.vinconafta.porovnajto.datas.StoreItem
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 
 class TopBarViewModel(application: Application) : AndroidViewModel(application) {
 
     private val db = AppDatabase.getDatabase(application)
+
+    private val _isMain = MutableStateFlow(true)
+    val isMain = _isMain.asStateFlow()
 
     val stores: StateFlow<List<StoreItem>> = db.storeDao()
         .getAll()
@@ -33,6 +38,10 @@ class TopBarViewModel(application: Application) : AndroidViewModel(application) 
 
     var selectedSection by mutableStateOf(TopBarSection.STORES)
         private set
+
+    fun setIsMain(value: Boolean) {
+        _isMain.value = value
+    }
 
     fun selectSection(section: TopBarSection) {
         selectedSection = section

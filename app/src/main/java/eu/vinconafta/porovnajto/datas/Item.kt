@@ -19,11 +19,11 @@ data class Item(
     val refToCategory: Int
 
 ): Parcelable{
+
     fun getResId(context: Context): Int {
         val iconResId = context.resources.getIdentifier(this.icon, "drawable", context.packageName)
-        val finalIconResId = if (iconResId != 0) iconResId else R.drawable.nic
 
-        return finalIconResId
+        return if (iconResId != 0) iconResId else R.drawable.nic
     }
 }
 

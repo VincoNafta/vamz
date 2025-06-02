@@ -1,7 +1,6 @@
 package eu.vinconafta.porovnajto
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -14,15 +13,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -30,9 +27,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import eu.vinconafta.porovnajto.ui.Rooms.AppDatabase
 import eu.vinconafta.porovnajto.datas.Item
-import eu.vinconafta.porovnajto.datas.Price
+import eu.vinconafta.porovnajto.ui.Rooms.AppDatabase
 
 class ItemActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,24 +52,7 @@ class ItemActivity : ComponentActivity() {
         }
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    fun TopBar(modifier: Modifier = Modifier, onBack: () -> Unit) {
-        TopAppBar(
-            title = {
-                Text(stringResource(id = R.string.app_name), color = Color.White)
-            },
-            navigationIcon = {
-                IconButton(onClick = onBack) {
-                    Icon(Icons.Filled.ArrowBack, contentDescription = "Back", tint = Color.White)
-                }
-            },
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primary
-            ),
-            modifier = modifier
-        )
-    }
+
 
     @Composable
     fun ShowDetailItem(item: Item, modifier: Modifier = Modifier) {
@@ -81,9 +60,9 @@ class ItemActivity : ComponentActivity() {
         val priceDao = remember { AppDatabase.getDatabase(context).priceDao() }
 
         // produceState spustí coroutine na pozadí a spravuje stav ceny
-        val priceState = produceState<Price?>(initialValue = null, item.refToPrice) {
-            value = priceDao.getById(item.refToPrice)
-        }
+//        val priceState = produceState<Price?>(initialValue = null, item.refToPrice) {
+//            value = priceDao.getById(item.refToPrice)
+//        }
 
         LazyColumn(
             modifier = modifier.fillMaxWidth()
@@ -130,9 +109,9 @@ class ItemActivity : ComponentActivity() {
                         fontWeight = FontWeight.Bold,
                         fontSize = 15.sp
                     )
-                    Text(
-                        text = priceState.value?.let { "\t ${it.price} (€)" } ?: "\t Načítavam..."
-                    )
+//                    Text(
+//                        text = priceState.value?.let { "\t ${it.price} (€)" } ?: "\t Načítavam..."
+//                    )
                     Text(
                         text = stringResource(id = R.string.other_offers),
                         fontWeight = FontWeight.Bold,
@@ -156,21 +135,21 @@ class ItemActivity : ComponentActivity() {
         val context = LocalContext.current
         val activity = context as? Activity
 
-        Column(modifier = Modifier) {
-            TopBar(
-                onBack = {
-                    val intent = Intent(context, MainActivity::class.java)
-                    context.startActivity(intent)
-                    activity?.finish()
-                }
-            )
-            ShowDetailItem(item)
+//        Column(modifier = Modifier) {
+//            MainTopAppBar(
+//                onBack = {
+//                    val intent = Intent(context, MainActivity::class.java)
+//                    context.startActivity(intent)
+//                    activity?.finish()
+//                }
+//            )
+//            ShowDetailItem(item)
         }
     }
 
     @Preview(showBackground = true)
     @Composable
     fun ItemPreview() {
-        ItemPage(item = Item(name = "Horalky", producer = "Sedita", icon = "horalky", refToCategory = 1, refToPrice = 1, refToStoreItem = 1))
-    }
+//        ItemPage(item = Item(name = "Horalky", producer = "Sedita", icon = "horalky", refToCategory = 1, refToPrice = 1, refToStoreItem = 1))
+//    }
 }

@@ -13,6 +13,9 @@ interface CurrencyDao {
     @Query("SELECT * FROM currency")
     fun getAll(): Flow<List<Currency>>
 
+    @Query("SELECT * FROM currency where Id= :currencyId")
+    fun genOnce(currencyId: Int) : Flow<Currency?>
+
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(currency: Currency)

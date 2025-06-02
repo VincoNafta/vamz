@@ -15,7 +15,7 @@ interface PriceDao {
     fun getAll(): Flow<List<Price>>
 
     @Query("SELECT * FROM price where id = :priceId")
-    suspend fun getById(priceId: Int): Price?
+    fun getById(priceId: Int): Flow<Price?>
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
