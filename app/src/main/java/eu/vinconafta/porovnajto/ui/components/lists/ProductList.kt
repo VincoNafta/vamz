@@ -1,4 +1,4 @@
-package eu.vinconafta.porovnajto.ui.components
+package eu.vinconafta.porovnajto.ui.components.lists
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -13,41 +13,39 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import eu.vinconafta.porovnajto.datas.Category
-import eu.vinconafta.porovnajto.datas.Item
-import eu.vinconafta.porovnajto.mvvms.TopBarViewModel
+import androidx.navigation.NavController
+import eu.vinconafta.porovnajto.datas.entities.Item
+
+
 
 @Composable
-fun CategoryList(categoryList: List<Category>,
-                 modifier: Modifier = Modifier,
-                 topBarViewModel: TopBarViewModel = viewModel()
+fun ProductList(
+    items: List<Item>,
+    navController: NavController,
+    modifier: Modifier = Modifier
 ) {
-
-
-
     LazyColumn(
         modifier = modifier,
-        contentPadding = PaddingValues(top = 16.dp, bottom = 8.dp)
+        contentPadding = PaddingValues(top = 30.dp, bottom = 8.dp)
     ) {
-        items(categoryList) { category ->
+        items(items) { item ->
             ListItem(
                 headlineContent = {
-                    Text(text = category.name)
+                    Text(text = item.name)
                 },
                 modifier = Modifier
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                    .padding(8.dp)
                     .border(
                         width = 1.dp,
                         color = Color.Gray,
                         shape = RoundedCornerShape(8.dp)
                     )
                     .clickable {
-
-
+                        navController.navigate("item/${item.id}")
                     }
                     .padding(8.dp)
             )
         }
     }
 }
+

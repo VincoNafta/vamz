@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import eu.vinconafta.porovnajto.datas.Category
+import eu.vinconafta.porovnajto.datas.entities.Category
 import kotlinx.coroutines.flow.Flow
 
 @Dao

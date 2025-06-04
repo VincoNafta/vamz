@@ -1,6 +1,5 @@
-package eu.vinconafta.porovnajto.ui.components
+package eu.vinconafta.porovnajto.ui.components.lists
 
-import android.content.Intent
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
@@ -8,54 +7,48 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import eu.vinconafta.porovnajto.datas.Item
-
-
+import eu.vinconafta.porovnajto.datas.entities.Category
+import eu.vinconafta.porovnajto.mvvms.TopBarViewModel
 
 @Composable
-fun ProductList(
-    items: List<Item>,
-    navController: NavController,
-    modifier: Modifier = Modifier
+fun CategoryList(categoryList: List<Category>,
+                 modifier: Modifier = Modifier,
+                 navController: NavController,
+                 topBarViewModel: TopBarViewModel = viewModel()
 ) {
+
+
+
     LazyColumn(
         modifier = modifier,
-        contentPadding = PaddingValues(top = 30.dp, bottom = 8.dp)
+        contentPadding = PaddingValues(top = 16.dp, bottom = 8.dp)
     ) {
-        items(items) { item ->
+        items(categoryList) { category ->
             ListItem(
                 headlineContent = {
-                    Text(text = item.name)
+                    Text(text = category.name)
                 },
                 modifier = Modifier
-                    .padding(8.dp)
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
                     .border(
                         width = 1.dp,
                         color = Color.Gray,
                         shape = RoundedCornerShape(8.dp)
                     )
                     .clickable {
-                        navController.navigate("item/${item.id}")
+                        navController.navigate("category/${category.id}")
+
                     }
                     .padding(8.dp)
             )
         }
     }
 }
-

@@ -27,25 +27,6 @@ import eu.vinconafta.porovnajto.R
 import eu.vinconafta.porovnajto.mvvms.TopBarViewModel
 import eu.vinconafta.porovnajto.ui.TopBarSection
 
-//@OptIn(ExperimentalMaterial3Api::class)
-//@Composable
-//fun MainTopAppBar(modifier: Modifier = Modifier, onBack: () -> Unit) {
-//    TopAppBar(
-//        title = {
-//            Text(stringResource(id = R.string.app_name), color = Color.White)
-//        },
-//        navigationIcon = {
-//            IconButton(onClick = onBack) {
-//                Icon(Icons.Filled.ArrowBack, contentDescription = "Back", tint = Color.White)
-//            }
-//        },
-//        colors = TopAppBarDefaults.topAppBarColors(
-//            containerColor = MaterialTheme.colorScheme.primary
-//        ),
-//        modifier = modifier
-//    )
-//}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainTopBar(viewModel: TopBarViewModel = viewModel(), navController: NavHostController) {

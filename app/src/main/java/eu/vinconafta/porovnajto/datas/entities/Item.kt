@@ -1,4 +1,4 @@
-package eu.vinconafta.porovnajto.datas
+package eu.vinconafta.porovnajto.datas.entities
 
 import android.content.Context
 import android.os.Parcelable
@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 import eu.vinconafta.porovnajto.R
 import kotlinx.parcelize.Parcelize
 
-@Parcelize
+
 @Entity(tableName = "items")
 data class Item(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
@@ -18,7 +18,7 @@ data class Item(
     val refToPrice: Int,
     val refToCategory: Int
 
-): Parcelable{
+){
 
     fun getResId(context: Context): Int {
         val iconResId = context.resources.getIdentifier(this.icon, "drawable", context.packageName)

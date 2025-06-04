@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import eu.vinconafta.porovnajto.datas.StoreItem
+import eu.vinconafta.porovnajto.datas.entities.StoreItem
 import kotlinx.coroutines.flow.Flow
 
 

@@ -8,9 +8,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import eu.vinconafta.porovnajto.ui.TopBarSection
 import eu.vinconafta.porovnajto.ui.Rooms.AppDatabase
-import eu.vinconafta.porovnajto.datas.Category
-import eu.vinconafta.porovnajto.datas.Item
-import eu.vinconafta.porovnajto.datas.StoreItem
+import eu.vinconafta.porovnajto.datas.entities.Category
+import eu.vinconafta.porovnajto.datas.entities.Item
+import eu.vinconafta.porovnajto.datas.entities.StoreItem
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -51,8 +51,10 @@ class TopBarViewModel(application: Application) : AndroidViewModel(application) 
         return db.itemDao()
             .getAllInCategory(category)
             .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+    }
 
-
+    fun getCategoriesInStore(storeId: Int): StateFlow<List<Category>>{
+        return db.itemDao().getCategoriesInStore(storeId).stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
     }
 }
 

@@ -5,9 +5,8 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import eu.vinconafta.porovnajto.datas.Price
+import eu.vinconafta.porovnajto.datas.entities.Price
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.selects.select
 
 @Dao
 interface PriceDao {
