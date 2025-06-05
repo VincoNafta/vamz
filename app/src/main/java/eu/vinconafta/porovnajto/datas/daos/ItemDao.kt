@@ -19,7 +19,12 @@ interface ItemDao {
     @Query("SELECT * FROM items where refToCategory = :categoryId")
     fun getAllInCategory(categoryId: Int) : Flow<List<Item>>
 
-    @Query("select c.* from category c join items i on (i.refToCategory = c.Id) where i.refToStoreItem = :storeId group by c.id")
+    @Query("SELECT c.* FROM STORE s " +
+            "join ItemStorePrice isp on (isp.refToStore = s.id) " +
+            "join items i on i.id = isp.refToItem " +
+            "join category c on c.id = i.refToCategory " +
+            "where s.id = :storeId " +
+            "group by c.id")
     fun getCategoriesInStore(storeId: Int): Flow<List<Category>>
 
     @Query("SELECT * FROM items where id = :itemId")

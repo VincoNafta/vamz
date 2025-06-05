@@ -18,8 +18,8 @@ class ItemScreenView(application: Application) : AndroidViewModel(application) {
         return db.itemDao().getId(id)
     }
 
-    fun getPrice(id: Int): Flow<Price?> {
-        return db.priceDao().getById(id)
+    fun getBestPrice(id: Int): Flow<Price?> {
+        return db.priceDao().getBestPrice(id)
     }
 
     fun getCurrency(id: Int): Flow<Currency?> {

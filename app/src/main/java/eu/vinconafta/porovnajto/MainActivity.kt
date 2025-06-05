@@ -1,5 +1,6 @@
 package eu.vinconafta.porovnajto
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -26,6 +27,7 @@ import eu.vinconafta.porovnajto.ui.TopBarSection
 import eu.vinconafta.porovnajto.ui.components.lists.CardGrid
 import eu.vinconafta.porovnajto.ui.components.lists.CategoryList
 import eu.vinconafta.porovnajto.ui.components.lists.ProductList
+import eu.vinconafta.porovnajto.ui.components.lists.ProductsList
 import eu.vinconafta.porovnajto.ui.components.menus.MainTopBar
 import eu.vinconafta.porovnajto.ui.components.menus.OtherTopAppBar
 
@@ -38,6 +40,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun MainScreen(
     topBarViewModel: TopBarViewModel = viewModel(),
@@ -79,8 +82,7 @@ fun MainScreen(
                     topBarViewModel.setIsMain(true)
                 }
                 composable(TopBarSection.SETS.name) {
-                    val items by topBarViewModel.items.collectAsState()
-                    ProductList(items = items, navController = navController)
+                    ProductsList(navController = navController)
                     topBarViewModel.setIsMain(true)
                 }
                 composable(TopBarSection.PRODUCTS.name) {

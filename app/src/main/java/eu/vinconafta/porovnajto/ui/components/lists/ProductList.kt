@@ -10,12 +10,36 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.vinconafta.porovnajto.datas.entities.Item
+import eu.vinconafta.porovnajto.mvvms.ProductListViewModel
+import eu.vinconafta.porovnajto.mvvms.TopBarViewModel
 
+@Composable
+fun ProductItem(item: Item, navController: NavController) {
+    ListItem(
+        headlineContent = {
+            Text(text = item.name)
+        },
+        modifier = Modifier
+            .padding(8.dp)
+            .border(
+                width = 1.dp,
+                color = Color.Gray,
+                shape = RoundedCornerShape(8.dp)
+            )
+            .clickable {
+                navController.navigate("item/${item.id}")
+            }
+            .padding(8.dp)
+    )
+}
 
 
 @Composable
@@ -29,23 +53,23 @@ fun ProductList(
         contentPadding = PaddingValues(top = 30.dp, bottom = 8.dp)
     ) {
         items(items) { item ->
-            ListItem(
-                headlineContent = {
-                    Text(text = item.name)
-                },
-                modifier = Modifier
-                    .padding(8.dp)
-                    .border(
-                        width = 1.dp,
-                        color = Color.Gray,
-                        shape = RoundedCornerShape(8.dp)
-                    )
-                    .clickable {
-                        navController.navigate("item/${item.id}")
-                    }
-                    .padding(8.dp)
-            )
+            ProductItem(item = item, navController = navController)
         }
     }
+}
+
+
+@Composable
+fun ProductsList(productListViewModel: ProductListViewModel = viewModel(), navController: NavController) {
+    val items by productListViewModel.items.collectAsState()
+    ProductList(items = items, navController = navController)
+}
+
+@Composable
+fun ProductsList(CategoryId: Int,productListViewModel: ProductListViewModel = viewModel(), navController: NavController) {
+    val items by productListViewModel.items.collectAsState()
+    ProductList(items = items, navController = navController)
+
+
 }
 

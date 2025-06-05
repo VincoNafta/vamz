@@ -12,12 +12,13 @@ import eu.vinconafta.porovnajto.datas.daos.StoreDao
 import eu.vinconafta.porovnajto.datas.entities.Category
 import eu.vinconafta.porovnajto.datas.entities.Currency
 import eu.vinconafta.porovnajto.datas.entities.Item
+import eu.vinconafta.porovnajto.datas.entities.ItemStorePrice
 import eu.vinconafta.porovnajto.datas.entities.Price
 import eu.vinconafta.porovnajto.datas.entities.StoreItem
 
 @Database(entities =
-[StoreItem::class, Item::class, Category::class, Currency::class, Price::class],
-    version = 5, exportSchema = false)
+[StoreItem::class, Item::class, Category::class, Currency::class,ItemStorePrice::class, Price::class],
+    version = 6, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun storeDao(): StoreDao

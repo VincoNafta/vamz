@@ -11,6 +11,7 @@ import eu.vinconafta.porovnajto.ui.Rooms.AppDatabase
 import eu.vinconafta.porovnajto.datas.entities.Category
 import eu.vinconafta.porovnajto.datas.entities.Item
 import eu.vinconafta.porovnajto.datas.entities.StoreItem
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -32,9 +33,6 @@ class TopBarViewModel(application: Application) : AndroidViewModel(application) 
         .getAll()
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
-    val items: StateFlow<List<Item>> = db.itemDao()
-        .getAll()
-        .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     var selectedSection by mutableStateOf(TopBarSection.STORES)
         private set
@@ -47,14 +45,13 @@ class TopBarViewModel(application: Application) : AndroidViewModel(application) 
         selectedSection = section
     }
 
-    fun getItemsInCategory(category: Int) : StateFlow<List<Item>>{
-        return db.itemDao()
-            .getAllInCategory(category)
-            .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+    fun getItemsInCategory(category: Int): Flow<List<Item>> {
+        return db.itemDao().getAllInCategory(category)
     }
 
-    fun getCategoriesInStore(storeId: Int): StateFlow<List<Category>>{
-        return db.itemDao().getCategoriesInStore(storeId).stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+    fun getCategoriesInStore(storeId: Int): Flow<List<Category>>{
+        return db.itemDao().getCategoriesInStore(storeId)
+//        return db.categoryDao().getAll().stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
     }
 }
 

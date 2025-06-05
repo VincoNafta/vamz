@@ -48,7 +48,7 @@ fun ItemScreen(
 
     val item = itemState!!
 
-    val priceFlow = remember(item.refToPrice) { viewModel.getPrice(item.refToPrice) }
+    val priceFlow = remember(item.id) { viewModel.getBestPrice(item.id) }
     val priceState by priceFlow.collectAsState(initial = null)
 
     if (priceState == null) {

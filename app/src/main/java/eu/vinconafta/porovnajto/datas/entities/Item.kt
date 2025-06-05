@@ -13,9 +13,9 @@ data class Item(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
     val producer: String,
-    val refToStoreItem: Int,
+//    val refToStoreItem: Int,
     val icon: String,
-    val refToPrice: Int,
+//    val refToPrice: Int,
     val refToCategory: Int
 
 ){
