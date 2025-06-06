@@ -3,6 +3,11 @@
     <string name="best_offer">Najlepšia Ponuka</string>
     <string name="other_offers">Ostatné ponuky</string>
     <string name="producer">Výrobca</string>
+    <string name="price">Cena</string>
+    <string name="itemName">Názov produktu</string>
+    <string name="createBtnText">Vytvoriť</string>
+    <string name="storeName">Vytvoriť</string>
+    <string name="noStores">Žiadne obchody</string>
     <string name="categories">KATGÓRIE</string>
     <string name="sets">ZOZNAMY</string>
     <string name="stores">OBCHODY</string>

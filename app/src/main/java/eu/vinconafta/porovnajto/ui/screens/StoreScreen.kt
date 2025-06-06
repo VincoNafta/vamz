@@ -1,4 +1,4 @@
-package eu.vinconafta.porovnajto.ui.components.lists
+package eu.vinconafta.porovnajto.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -27,7 +27,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import eu.vinconafta.porovnajto.datas.entities.StoreItem
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -79,7 +78,7 @@ fun CardWithImageAndText(item: StoreItem, navController: NavController) {
 }
 
 @Composable
-fun CardGrid(cardItems: List<StoreItem>, navController: NavController, modifier: Modifier = Modifier) {
+fun StoreScreen(cardItems: List<StoreItem>, navController: NavController, modifier: Modifier = Modifier) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = modifier
