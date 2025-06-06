@@ -71,7 +71,7 @@ fun CardWithImageAndText(item: StoreItem, navController: NavController) {
                 text = item.storeName,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.Black,
+//                color = Color.Black,
                 modifier = Modifier.padding(12.dp)
             )
         }
