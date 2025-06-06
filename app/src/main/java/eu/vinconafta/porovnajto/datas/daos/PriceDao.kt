@@ -5,7 +5,10 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import eu.vinconafta.porovnajto.datas.entities.Item
+import eu.vinconafta.porovnajto.datas.entities.ItemStorePrice
 import eu.vinconafta.porovnajto.datas.entities.Price
+import eu.vinconafta.porovnajto.datas.entities.StoreItem
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -25,9 +28,17 @@ interface PriceDao {
             "limit 1")
     fun getBestPrice(itemId: Int): Flow<Price?>
 
+    @Query("SELECT st.* FROM ItemStorePrice isp " +
+            "join store st on (st.id = isp.refToStore)" +
+            "where isp.refToPrice = :priceId and isp.refToItem = :itemId")
+    fun getStoreByPriceItem(priceId: Int, itemId: Int): Flow<StoreItem?>
+
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(price: Price)
+    suspend fun insertStorePrice(storePrice: ItemStorePrice)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(price: Price): Long
 
     @Delete
     suspend fun delete(price: Price)

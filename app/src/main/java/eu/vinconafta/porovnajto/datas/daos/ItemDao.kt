@@ -31,7 +31,7 @@ interface ItemDao {
     fun getId(itemId: Int): Flow<Item?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertItem(item: Item)
+    suspend fun insertItem(item: Item): Long
 
     @Delete
     suspend fun deleteItem(item: Item)

@@ -1,4 +1,4 @@
-package eu.vinconafta.porovnajto
+package eu.vinconafta.porovnajto.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import eu.vinconafta.porovnajto.R
 import eu.vinconafta.porovnajto.mvvms.ItemScreenView
 
 
@@ -66,6 +67,8 @@ fun ItemScreen(
 
     val currencyFlow = remember(price.currencyId) { viewModel.getCurrency(price.currencyId) }
     val currencyState by currencyFlow.collectAsState(initial = null)
+    val isp_flow = remember(price.id, item.id) { viewModel.getItemStore(price.id, item.id)}
+    val ispState by isp_flow.collectAsState(initial = null)
 
     if (currencyState == null) {
         Text(
@@ -79,6 +82,9 @@ fun ItemScreen(
     }
 
     val currency = currencyState!!
+
+    val isp = ispState!!
+
 
     // Všetky dáta sú načítané, môžeme zobraziť UI
     LazyColumn(
@@ -127,7 +133,7 @@ fun ItemScreen(
                     fontSize = 15.sp
                 )
                 Text(
-                    text = "${price.price} ${currency.symbol}"
+                    text = "${price.price} ${currency.symbol} (${isp.storeName})"
                 )
                 Text(
                     text = stringResource(id = R.string.other_offers),

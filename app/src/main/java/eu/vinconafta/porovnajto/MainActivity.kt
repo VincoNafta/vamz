@@ -6,30 +6,29 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import eu.vinconafta.porovnajto.mvvms.TopBarViewModel
 import eu.vinconafta.porovnajto.ui.TopBarSection
-import eu.vinconafta.porovnajto.ui.components.lists.CardGrid
 import eu.vinconafta.porovnajto.ui.components.lists.CategoryList
 import eu.vinconafta.porovnajto.ui.components.lists.ProductList
 import eu.vinconafta.porovnajto.ui.components.lists.ProductsList
 import eu.vinconafta.porovnajto.ui.components.menus.MainTopBar
 import eu.vinconafta.porovnajto.ui.components.menus.OtherTopAppBar
+import eu.vinconafta.porovnajto.ui.screens.ItemScreen
+import eu.vinconafta.porovnajto.ui.screens.StoreScreen
+import eu.vinconafta.porovnajto.ui.screens.createItemScreen
 import eu.vinconafta.porovnajto.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -47,8 +46,7 @@ fun MainScreen(
     topBarViewModel: TopBarViewModel = viewModel(),
     navController: NavHostController = rememberNavController()
 ) {
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
+//    val navBackStackEntry by navController.currentBackStackEntryAsState()
     val isMain by topBarViewModel.isMain.collectAsState()
     MyApplicationTheme {
         Scaffold(
@@ -71,7 +69,7 @@ fun MainScreen(
 
                     composable(TopBarSection.STORES.name) {
                         val stores by topBarViewModel.stores.collectAsState()
-                        CardGrid(cardItems = stores, navController)
+                        StoreScreen(cardItems = stores, navController)
                         topBarViewModel.setIsMain(true)
                     }
                     composable(TopBarSection.CATEGORIES.name) {
@@ -88,8 +86,9 @@ fun MainScreen(
                         topBarViewModel.setIsMain(true)
                     }
                     composable(TopBarSection.PRODUCTS.name) {
-                        Text("Tu budú produkty", modifier = Modifier.padding(16.dp))
-                        topBarViewModel.setIsMain(true)
+//                        Text("Tu budú produkty", modifier = Modifier.padding(16.dp))
+                        createItemScreen()
+                        topBarViewModel.setIsMain(false)
                     }
 
                     composable(
