@@ -30,6 +30,7 @@ import eu.vinconafta.porovnajto.ui.components.lists.ProductList
 import eu.vinconafta.porovnajto.ui.components.lists.ProductsList
 import eu.vinconafta.porovnajto.ui.components.menus.MainTopBar
 import eu.vinconafta.porovnajto.ui.components.menus.OtherTopAppBar
+import eu.vinconafta.porovnajto.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,105 +50,105 @@ fun MainScreen(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     val isMain by topBarViewModel.isMain.collectAsState()
-    Scaffold(
+    MyApplicationTheme {
+        Scaffold(
 
-        topBar = {
-            if (isMain) {
-                MainTopBar(viewModel = topBarViewModel, navController = navController)
-            } else {
-                OtherTopAppBar {
-                    navController.popBackStack()
-                }
-            }
-        },
-        content = { paddingValues ->
-            NavHost(
-                navController = navController,
-                startDestination = TopBarSection.STORES.name,
-                modifier = Modifier.padding(paddingValues)
-            ) {
-
-                composable(TopBarSection.STORES.name) {
-                    val stores by topBarViewModel.stores.collectAsState()
-                    CardGrid(cardItems = stores, navController)
-                    topBarViewModel.setIsMain(true)
-                }
-                composable(TopBarSection.CATEGORIES.name) {
-                    val categories by topBarViewModel.categories.collectAsState()
-                    CategoryList(
-                        categoryList = categories,
-                        navController = navController,
-                        topBarViewModel = topBarViewModel
-                    )
-                    topBarViewModel.setIsMain(true)
-                }
-                composable(TopBarSection.SETS.name) {
-                    ProductsList(navController = navController)
-                    topBarViewModel.setIsMain(true)
-                }
-                composable(TopBarSection.PRODUCTS.name) {
-                    Text("Tu budú produkty", modifier = Modifier.padding(16.dp))
-                    topBarViewModel.setIsMain(true)
-                }
-
-                composable(
-                    route = "item/{id}",
-                    arguments = listOf(
-                        navArgument("id") { type = NavType.IntType }
-                    )
-                ) { backStackEntry ->
-                    val itemId = backStackEntry.arguments?.getInt("id")
-
-                    if (itemId != null) {
-                        ItemScreen(itemId = itemId)
-                    }
-
-                    topBarViewModel.setIsMain(false)
-                }
-
-                composable(
-                    route = "category/{cat_id}",
-                    arguments = listOf(
-                        navArgument("cat_id") { type = NavType.IntType }
-                    )
-                ) { backStackEntry ->
-                    val catId = backStackEntry.arguments?.getInt("cat_id")
-
-                    topBarViewModel.setIsMain(false)
-                    LaunchedEffect(Unit) {
-
-                    }
-
-                    if (catId != null) {
-                        val items by topBarViewModel.getItemsInCategory(catId)
-                            .collectAsState(initial = emptyList())
-                        ProductList(items = items, navController = navController)
+            topBar = {
+                if (isMain) {
+                    MainTopBar(viewModel = topBarViewModel, navController = navController)
+                } else {
+                    OtherTopAppBar {
+                        navController.popBackStack()
                     }
                 }
-                composable(route = "storeCategory/{store_id}",
-                    arguments = listOf(
-                        navArgument("store_id") { type = NavType.IntType })
-                ) { backStackEntry ->
-                    val storeId = backStackEntry.arguments?.getInt("store_id")
+            },
+            content = { paddingValues ->
+                NavHost(
+                    navController = navController,
+                    startDestination = TopBarSection.STORES.name,
+                    modifier = Modifier.padding(paddingValues)
+                ) {
 
-                    topBarViewModel.setIsMain(false)
-                    LaunchedEffect(Unit) {
+                    composable(TopBarSection.STORES.name) {
+                        val stores by topBarViewModel.stores.collectAsState()
+                        CardGrid(cardItems = stores, navController)
+                        topBarViewModel.setIsMain(true)
+                    }
+                    composable(TopBarSection.CATEGORIES.name) {
+                        val categories by topBarViewModel.categories.collectAsState()
+                        CategoryList(
+                            categoryList = categories,
+                            navController = navController,
+                            topBarViewModel = topBarViewModel
+                        )
+                        topBarViewModel.setIsMain(true)
+                    }
+                    composable(TopBarSection.SETS.name) {
+                        ProductsList(navController = navController)
+                        topBarViewModel.setIsMain(true)
+                    }
+                    composable(TopBarSection.PRODUCTS.name) {
+                        Text("Tu budú produkty", modifier = Modifier.padding(16.dp))
+                        topBarViewModel.setIsMain(true)
                     }
 
-                    if (storeId != null) {
-                        val categories by topBarViewModel.getCategoriesInStore(storeId)
-                            .collectAsState(initial = emptyList())
+                    composable(
+                        route = "item/{id}",
+                        arguments = listOf(
+                            navArgument("id") { type = NavType.IntType }
+                        )
+                    ) { backStackEntry ->
+                        val itemId = backStackEntry.arguments?.getInt("id")
+
+                        if (itemId != null) {
+                            ItemScreen(itemId = itemId)
+                        }
+
+                        topBarViewModel.setIsMain(false)
+                    }
+
+                    composable(
+                        route = "category/{cat_id}",
+                        arguments = listOf(
+                            navArgument("cat_id") { type = NavType.IntType }
+                        )
+                    ) { backStackEntry ->
+                        val catId = backStackEntry.arguments?.getInt("cat_id")
+
+                        topBarViewModel.setIsMain(false)
+                        LaunchedEffect(Unit) {
+
+                        }
+
+                        if (catId != null) {
+                            val items by topBarViewModel.getItemsInCategory(catId)
+                                .collectAsState(initial = emptyList())
+                            ProductList(items = items, navController = navController)
+                        }
+                    }
+                    composable(
+                        route = "storeCategory/{store_id}",
+                        arguments = listOf(
+                            navArgument("store_id") { type = NavType.IntType })
+                    ) { backStackEntry ->
+                        val storeId = backStackEntry.arguments?.getInt("store_id")
+
+                        topBarViewModel.setIsMain(false)
+                        LaunchedEffect(Unit) {
+                        }
+
+                        if (storeId != null) {
+                            val categories by topBarViewModel.getCategoriesInStore(storeId)
+                                .collectAsState(initial = emptyList())
                             CategoryList(categoryList = categories, navController = navController)
+                        }
                     }
                 }
             }
+        )
+    }
 
-
-
-        }
-    )
 }
-
 
 
 @Preview(showBackground = true)
