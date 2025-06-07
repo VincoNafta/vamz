@@ -12,4 +12,8 @@
     <string name="sets">ZOZNAMY</string>
     <string name="stores">OBCHODY</string>
     <string name="products">PRODUKTY</string>
+    <string name="loadingItem">Načitávam položku...</string>
+    <string name="loadingPrice">Načitávam Cenu...</string>
+    <string name="loadingCurrency">Načitávam Menu...</string>
+    <string name="noImage">Nedostupný obrázok</string>
 </resources>

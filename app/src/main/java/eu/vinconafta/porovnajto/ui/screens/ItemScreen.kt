@@ -31,6 +31,21 @@ import eu.vinconafta.porovnajto.mvvms.ItemScreenView
  * @author Marek Štefanča
  */
 
+
+/**
+ * Metoda služiaca na zobrazenie stavu pokiaľ sa objekt načíta
+ */
+@Composable
+fun LoadingScreen(loadingScr: String, modifier: Modifier) {
+    Text(
+        text = loadingScr,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        fontSize = 18.sp
+    )
+}
+
 /**
  * funkcia slúžiaca na vykreslenie obrazovky
  * @param itemId id daného predmetu z db
@@ -47,13 +62,7 @@ fun ItemScreen(
     val itemState by itemFlow.collectAsState(initial = null)
 
     if (itemState == null) {
-        Text(
-            text = "Načítavam položku...",
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            fontSize = 18.sp
-        )
+        LoadingScreen(loadingScr = stringResource(id = R.string.loadingItem), modifier = modifier)
         return
     }
 
@@ -63,13 +72,7 @@ fun ItemScreen(
     val priceState by priceFlow.collectAsState(initial = null)
 
     if (priceState == null) {
-        Text(
-            text = "Načítavam cenu...",
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            fontSize = 18.sp
-        )
+        LoadingScreen(loadingScr = stringResource(id = R.string.loadingPrice), modifier = modifier)
         return
     }
 
@@ -77,22 +80,16 @@ fun ItemScreen(
 
     val currencyFlow = remember(price.currencyId) { viewModel.getCurrency(price.currencyId) }
     val currencyState by currencyFlow.collectAsState(initial = null)
-    val ispFlow = remember(price.id, item.id) { viewModel.getItemStore(priceId = price.id, itemId = item.id)}
+    val ispFlow =
+        remember(price.id, item.id) { viewModel.getItemStore(priceId = price.id, itemId = item.id) }
     val ispState by ispFlow.collectAsState(initial = null)
 
     if (currencyState == null) {
-        Text(
-            text = "Načítavam menu...",
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            fontSize = 18.sp
-        )
+        LoadingScreen(loadingScr = stringResource(id = R.string.loadingPrice), modifier = modifier)
         return
     }
 
     val currency = currencyState!!
-
     val isp = ispState!!
 
 
@@ -159,16 +156,4 @@ fun ItemScreen(
         }
     }
 
-
-
-
-
-
-
-//    Column(modifier = Modifier
-//        .fillMaxSize()
-//        .padding(16.dp)) {
-//        Text(text = item.name, fontSize = 24.sp, fontWeight = FontWeight.Bold)
-//        Text(text = "Manufacturer: ${item.producer}", fontSize = 18.sp)
-//    }
 }

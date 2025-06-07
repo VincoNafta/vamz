@@ -23,11 +23,13 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import eu.vinconafta.porovnajto.datas.entities.StoreItem
+import eu.vinconafta.porovnajto.R
 
 /**
  * Obrazovka kde su zobrazené obchody
@@ -41,7 +43,7 @@ import eu.vinconafta.porovnajto.datas.entities.StoreItem
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CardWithImageAndText(item: StoreItem, navController: NavController) {
+fun CardStore(item: StoreItem, navController: NavController) {
     val context = LocalContext.current
     val resId = remember(item.iconName) { item.getResId(context) }
 
@@ -72,7 +74,7 @@ fun CardWithImageAndText(item: StoreItem, navController: NavController) {
                         .padding(8.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text("No Image", color = Color.Gray)
+                    Text(stringResource(id = R.string.noImage), color = Color.Gray)
                 }
             }
 
@@ -80,7 +82,6 @@ fun CardWithImageAndText(item: StoreItem, navController: NavController) {
                 text = item.storeName,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
-//                color = Color.Black,
                 modifier = Modifier.padding(12.dp)
             )
         }
@@ -104,7 +105,7 @@ fun StoreScreen(cardItems: List<StoreItem>, navController: NavController, modifi
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(cardItems.size) { index ->
-            CardWithImageAndText(item = cardItems[index], navController)
+            CardStore(item = cardItems[index], navController)
         }
     }
 }
