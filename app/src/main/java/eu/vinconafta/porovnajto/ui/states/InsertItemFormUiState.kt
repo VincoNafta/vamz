@@ -1,6 +1,8 @@
+package eu.vinconafta.porovnajto.ui.states
+
 /**
  * Datova trieda popisujúca dané položky vo formulári
- * @param Marek Štefanča
+ * @author Marek Štefanča
  */
 data class InsertItemFormUiState(
     val itemName: String = "",

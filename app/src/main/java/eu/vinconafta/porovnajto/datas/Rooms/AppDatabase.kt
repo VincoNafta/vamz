@@ -1,4 +1,4 @@
-package eu.vinconafta.porovnajto.ui.Rooms
+package eu.vinconafta.porovnajto.datas.Rooms
 
 import android.content.Context
 import androidx.room.Database

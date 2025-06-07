@@ -6,7 +6,7 @@ import eu.vinconafta.porovnajto.datas.entities.Currency
 import eu.vinconafta.porovnajto.datas.entities.Item
 import eu.vinconafta.porovnajto.datas.entities.Price
 import eu.vinconafta.porovnajto.datas.entities.StoreItem
-import eu.vinconafta.porovnajto.ui.Rooms.AppDatabase
+import eu.vinconafta.porovnajto.datas.Rooms.AppDatabase
 import kotlinx.coroutines.flow.Flow
 
 /**

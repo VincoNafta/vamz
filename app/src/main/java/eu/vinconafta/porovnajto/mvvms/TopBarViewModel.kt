@@ -7,7 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import eu.vinconafta.porovnajto.ui.TopBarSection
-import eu.vinconafta.porovnajto.ui.Rooms.AppDatabase
+import eu.vinconafta.porovnajto.datas.Rooms.AppDatabase
 import eu.vinconafta.porovnajto.datas.entities.Category
 import eu.vinconafta.porovnajto.datas.entities.Item
 import eu.vinconafta.porovnajto.datas.entities.StoreItem

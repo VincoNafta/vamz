@@ -1,6 +1,6 @@
 package eu.vinconafta.porovnajto.mvvms
 
-import InsertItemFormUiState
+import eu.vinconafta.porovnajto.ui.states.InsertItemFormUiState
 import android.app.Application
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -12,7 +12,7 @@ import eu.vinconafta.porovnajto.datas.entities.Item
 import eu.vinconafta.porovnajto.datas.entities.ItemStorePrice
 import eu.vinconafta.porovnajto.datas.entities.Price
 import eu.vinconafta.porovnajto.datas.entities.StoreItem
-import eu.vinconafta.porovnajto.ui.Rooms.AppDatabase
+import eu.vinconafta.porovnajto.datas.Rooms.AppDatabase
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn

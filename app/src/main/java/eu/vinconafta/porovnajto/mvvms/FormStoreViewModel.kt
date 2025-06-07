@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 class FormStoreViewModel {
 
     private val _uiState = MutableStateFlow(InsertStoreFormUiStatement())
-//    val uiState: StateFlow<InsertItemFormUiState> = _uiState.asStateFlow()
+//    val uiState: StateFlow<eu.vinconafta.porovnajto.ui.states.InsertItemFormUiState> = _uiState.asStateFlow()
     var formState by mutableStateOf(InsertStoreFormUiStatement())
 
     fun updateStoreName(newStoreName:String) {
