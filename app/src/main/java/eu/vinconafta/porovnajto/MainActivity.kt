@@ -81,15 +81,15 @@ fun MainScreen(
                         )
                         topBarViewModel.setIsMain(true)
                     }
-                    composable(TopBarSection.SETS.name) {
+                    composable(TopBarSection.PRODUCTS.name) {
                         ProductsList(navController = navController)
                         topBarViewModel.setIsMain(true)
                     }
-                    composable(TopBarSection.PRODUCTS.name) {
+                    /*composable(TopBarSection.PRODUCTS.name) {
 //                        Text("Tu budú produkty", modifier = Modifier.padding(16.dp))
                         createItemScreen()
                         topBarViewModel.setIsMain(false)
-                    }
+                    }*/
 
                     composable(
                         route = "item/{id}",
@@ -141,6 +141,14 @@ fun MainScreen(
                                 .collectAsState(initial = emptyList())
                             CategoryList(categoryList = categories, navController = navController)
                         }
+                    }
+
+                    composable(
+                        route = "createitem"
+                    ) {
+                        createItemScreen(navController= navController)
+
+                        topBarViewModel.setIsMain(false)
                     }
                 }
             }

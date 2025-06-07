@@ -27,7 +27,7 @@ class ItemScreenView(application: Application) : AndroidViewModel(application) {
         return db.currencyDao().genOnce(id)
     }
 
-    fun getItemStore(storeId: Int, priceId:Int): Flow<StoreItem?>{
-        return db.priceDao().getStoreByPriceItem(priceId, storeId)
+    fun getItemStore(itemId: Int, priceId:Int): Flow<StoreItem?>{
+        return db.priceDao().getStoreByPriceItem(priceId, itemId)
     }
 }

@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import eu.vinconafta.porovnajto.datas.entities.Item
 import eu.vinconafta.porovnajto.datas.entities.ItemStorePrice
 import eu.vinconafta.porovnajto.datas.entities.Price
@@ -63,14 +64,22 @@ class FormItemViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    fun registerItem() {
+    fun registerItem(navController: NavController) {
         val priceValue = priceInput.toDoubleOrNull() ?: 0.0
+
+        if (formState.itemName.isBlank() || priceValue <= 0 || formState.producer.isBlank() || formState.storeId <= 0) {
+
+            return
+        }
 
         viewModelScope.launch {
             val insertedId = db.priceDao().insert(Price(currencyId = 1, price = priceValue)).toInt()
             val newItemId = db.itemDao().insertItem(Item(name = formState.itemName, producer = formState.producer, icon = formState.itemName.lowercase(), refToCategory = 1))
             db.priceDao().insertStorePrice(ItemStorePrice(refToPrice = insertedId, refToStore = formState.storeId, refToItem = newItemId.toInt()))
         }
+
+        navController.popBackStack()
+
 
 
     }

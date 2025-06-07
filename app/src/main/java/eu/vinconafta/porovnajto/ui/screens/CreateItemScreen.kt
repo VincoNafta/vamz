@@ -25,6 +25,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import eu.vinconafta.porovnajto.R
 import eu.vinconafta.porovnajto.datas.entities.StoreItem
 import eu.vinconafta.porovnajto.mvvms.FormItemViewModel
@@ -34,6 +35,7 @@ import eu.vinconafta.porovnajto.mvvms.FormItemViewModel
 @Composable
 fun createItemScreen(
     insertFormUi: FormItemViewModel = viewModel(),
+    navController: NavController,
     modifier: Modifier = Modifier
 ) {
     val formData = insertFormUi.formState
@@ -86,7 +88,7 @@ fun createItemScreen(
                 horizontalArrangement = Arrangement.End
             ) {
                 Button(
-                    onClick = { insertFormUi.registerItem() }
+                    onClick = { insertFormUi.registerItem(navController = navController) }
                 ) {
                     Text(text = stringResource(id = R.string.createBtnText))
                 }

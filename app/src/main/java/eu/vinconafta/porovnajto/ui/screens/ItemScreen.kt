@@ -67,7 +67,7 @@ fun ItemScreen(
 
     val currencyFlow = remember(price.currencyId) { viewModel.getCurrency(price.currencyId) }
     val currencyState by currencyFlow.collectAsState(initial = null)
-    val isp_flow = remember(price.id, item.id) { viewModel.getItemStore(price.id, item.id)}
+    val isp_flow = remember(price.id, item.id) { viewModel.getItemStore(priceId = price.id, itemId = item.id)}
     val ispState by isp_flow.collectAsState(initial = null)
 
     if (currencyState == null) {
