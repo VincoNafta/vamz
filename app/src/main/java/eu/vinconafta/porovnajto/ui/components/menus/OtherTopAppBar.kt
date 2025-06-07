@@ -15,6 +15,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import eu.vinconafta.porovnajto.R
 
+/**
+ * Súbor popisujúci vedlajšie menu s možnosťou návratu
+ * @author Marek Štefanča
+ */
+
+/**
+ * Funkcia slúžiaca na vykreslenie menu
+ * @param modifier referencia na modifier
+ * @param onBack definované spravanie po vrátení sa naspäť
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OtherTopAppBar(modifier: Modifier = Modifier, onBack: () -> Unit) {

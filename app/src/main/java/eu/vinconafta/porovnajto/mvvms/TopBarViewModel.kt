@@ -18,6 +18,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 
+/**
+ * Trieda slúžiaca na MVVM pre horné menu
+ */
 class TopBarViewModel(application: Application) : AndroidViewModel(application) {
 
     private val db = AppDatabase.getDatabase(application)
@@ -33,25 +36,40 @@ class TopBarViewModel(application: Application) : AndroidViewModel(application) 
         .getAll()
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
+    val items: StateFlow<List<Item>> = db.itemDao()
+        .getAll()
+        .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+
 
     var selectedSection by mutableStateOf(TopBarSection.STORES)
         private set
 
+    /**
+     * Setter ktorý mení stav toho či je sa zobrazuje hlavné alebo vedlajšie menu
+     */
     fun setIsMain(value: Boolean) {
         _isMain.value = value
     }
 
+    /**
+     * Setter vybraného menu
+     */
     fun selectSection(section: TopBarSection) {
         selectedSection = section
     }
 
+    /**
+     * Funkcia ktorá slúži na výber všetkých predmetov v rámci kategorie
+     */
     fun getItemsInCategory(category: Int): Flow<List<Item>> {
         return db.itemDao().getAllInCategory(category)
     }
 
+    /**
+     * Funkcia ktorá kategorie podľa vybraného obchodu
+     */
     fun getCategoriesInStore(storeId: Int): Flow<List<Category>>{
         return db.itemDao().getCategoriesInStore(storeId)
-//        return db.categoryDao().getAll().stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
     }
 }
 

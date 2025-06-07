@@ -18,17 +18,24 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import eu.vinconafta.porovnajto.datas.entities.Item
-import eu.vinconafta.porovnajto.mvvms.ProductListViewModel
-import eu.vinconafta.porovnajto.ui.screens.createItemScreen
 
+//import eu.vinconafta.porovnajto.mvvms.ProductListViewModel
+
+/**
+ * Komponent ktorý vykresluje list produktov
+ *  @author Marek Štefanča
+ */
+
+/**
+ * Jeden chlievik pre dany item
+ * @param item referencia na item
+ * @param navController referencia na navcontroller
+ */
 @Composable
 fun ProductItem(item: Item, navController: NavController) {
     ListItem(
@@ -49,7 +56,12 @@ fun ProductItem(item: Item, navController: NavController) {
     )
 }
 
-
+/**
+ * Metoda ktorá vykreslí zoznam produktov podľa kolekcie
+ * @param items kolekcia predmetov podľa výberu
+ * @param navController rerencia na navController
+ * @param modifier referencia na modifier
+ */
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ProductList(
@@ -82,19 +94,4 @@ fun ProductList(
 
 }
 
-
-
-@Composable
-fun ProductsList(productListViewModel: ProductListViewModel = viewModel(), navController: NavController) {
-    val items by productListViewModel.items.collectAsState()
-    ProductList(items = items, navController = navController)
-}
-
-@Composable
-fun ProductsList(CategoryId: Int,productListViewModel: ProductListViewModel = viewModel(), navController: NavController) {
-    val items by productListViewModel.items.collectAsState()
-    ProductList(items = items, navController = navController)
-
-
-}
 

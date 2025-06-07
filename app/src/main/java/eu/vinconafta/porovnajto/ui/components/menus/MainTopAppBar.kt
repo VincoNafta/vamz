@@ -27,6 +27,17 @@ import eu.vinconafta.porovnajto.R
 import eu.vinconafta.porovnajto.mvvms.TopBarViewModel
 import eu.vinconafta.porovnajto.ui.TopBarSection
 
+/**
+ * Súbor ktorý popisuje zobrazenie hlavného menu
+ * @author Marek Štefanča
+ */
+
+
+/**
+ * Metoda služiaca na vykreslenie hlavného menu (baru)
+ * @param viewModel referencia na viewModel
+ * @param navController referencia na navController
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainTopBar(viewModel: TopBarViewModel = viewModel(), navController: NavHostController) {
@@ -74,7 +85,12 @@ fun MainTopBar(viewModel: TopBarViewModel = viewModel(), navController: NavHostC
     }
 }
 
-
+/**
+ * Metoda služiaca na zobrazenie tlačidla a ak je vybrate tak ho podčiarke a zmení farbu
+ * @param section konkretna položka/sekcia
+ * @param selected vybrana sekcia
+ * @param onClick definované správanie po kliknutí
+ */
 @Composable
 fun TopBarButton(
     section: TopBarSection,

@@ -26,7 +26,17 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import eu.vinconafta.porovnajto.R
 import eu.vinconafta.porovnajto.mvvms.ItemScreenView
 
+/**
+ * Súbor služiaci na popis zobrazenie (obrazovka) detilu daného predmetu
+ * @author Marek Štefanča
+ */
 
+/**
+ * funkcia slúžiaca na vykreslenie obrazovky
+ * @param itemId id daného predmetu z db
+ * @param viewModel referencia na viewmodel
+ * @param modifier referencia na modifier
+ */
 @Composable
 fun ItemScreen(
     itemId: Int,
@@ -67,8 +77,8 @@ fun ItemScreen(
 
     val currencyFlow = remember(price.currencyId) { viewModel.getCurrency(price.currencyId) }
     val currencyState by currencyFlow.collectAsState(initial = null)
-    val isp_flow = remember(price.id, item.id) { viewModel.getItemStore(priceId = price.id, itemId = item.id)}
-    val ispState by isp_flow.collectAsState(initial = null)
+    val ispFlow = remember(price.id, item.id) { viewModel.getItemStore(priceId = price.id, itemId = item.id)}
+    val ispState by ispFlow.collectAsState(initial = null)
 
     if (currencyState == null) {
         Text(
@@ -86,7 +96,6 @@ fun ItemScreen(
     val isp = ispState!!
 
 
-    // Všetky dáta sú načítané, môžeme zobraziť UI
     LazyColumn(
         modifier = modifier.fillMaxWidth()
     ) {

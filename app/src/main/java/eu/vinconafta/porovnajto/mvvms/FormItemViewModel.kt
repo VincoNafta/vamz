@@ -13,13 +13,15 @@ import eu.vinconafta.porovnajto.datas.entities.ItemStorePrice
 import eu.vinconafta.porovnajto.datas.entities.Price
 import eu.vinconafta.porovnajto.datas.entities.StoreItem
 import eu.vinconafta.porovnajto.ui.Rooms.AppDatabase
-
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+
+/**
+ * VM určený pre editovanie dát pre formulár na vytvorenie obchodu
+ * @author Marek Štefanča
+ */
 
 class FormItemViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -37,22 +39,37 @@ class FormItemViewModel(application: Application) : AndroidViewModel(application
         priceInput = if (formState.price == 0.0) "" else formState.price.toString()
     }
 
+    /**
+     * Metoda na zmenu mena obchodu
+     */
     fun updateStoreName(newStoreName: String) {
         formState = formState.copy(storeName = newStoreName)
     }
 
+    /**
+     * Metoda určená na zmenu Id ktore sa ťaha z DB
+     */
     fun updateStoreId(newStoreId: Int) {
         formState = formState.copy(storeId = newStoreId)
     }
 
+    /**
+     * Metoda určená na zmenu poľa na meno položky
+     */
     fun updateItemName(newItemName: String) {
         formState = formState.copy(itemName = newItemName)
     }
 
+    /**
+     * Metoda určena na zmenu poľa pre výrobcu
+     */
     fun updateProducer(newProducer: String) {
         formState = formState.copy(producer = newProducer)
     }
 
+    /**
+     * Metoda určena na zmenu ceny
+     */
     fun updatePriceInput(newPriceInput: String) {
         priceInput = newPriceInput
 
@@ -64,6 +81,9 @@ class FormItemViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
+    /**
+     * Metoda určená na vytvorenie objektu v DB ak sú hodnoty validné (sú vyplnené)
+     */
     fun registerItem(navController: NavController) {
         val priceValue = priceInput.toDoubleOrNull() ?: 0.0
 
@@ -79,8 +99,6 @@ class FormItemViewModel(application: Application) : AndroidViewModel(application
         }
 
         navController.popBackStack()
-
-
 
     }
 }

@@ -18,6 +18,17 @@ import androidx.navigation.NavController
 import eu.vinconafta.porovnajto.datas.entities.Category
 import eu.vinconafta.porovnajto.mvvms.TopBarViewModel
 
+/**
+ * Súbor ktorý popisuje zobrazenie kategorii
+ * @author Marek Štefanča
+ */
+
+/**
+ * funkcia ktorá slúži na vykreslenie kategorii z výberu
+ * @param categoryList referencia na zoznam kategorii z vyberu
+ * @param navController referencia na navController
+ * @param topBarViewModel referencia na viewmodel (menu)
+ */
 @Composable
 fun CategoryList(categoryList: List<Category>,
                  modifier: Modifier = Modifier,

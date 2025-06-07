@@ -4,6 +4,10 @@ import android.content.Context
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/**
+ * Db entita StoreItem ORM framerowku
+ * @author Marek Štefanča
+ */
 @Entity(tableName = "store")
 data class StoreItem(
     @PrimaryKey(

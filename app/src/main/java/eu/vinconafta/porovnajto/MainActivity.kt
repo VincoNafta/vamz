@@ -23,12 +23,11 @@ import eu.vinconafta.porovnajto.mvvms.TopBarViewModel
 import eu.vinconafta.porovnajto.ui.TopBarSection
 import eu.vinconafta.porovnajto.ui.components.lists.CategoryList
 import eu.vinconafta.porovnajto.ui.components.lists.ProductList
-import eu.vinconafta.porovnajto.ui.components.lists.ProductsList
 import eu.vinconafta.porovnajto.ui.components.menus.MainTopBar
 import eu.vinconafta.porovnajto.ui.components.menus.OtherTopAppBar
+import eu.vinconafta.porovnajto.ui.screens.CreateItemScreen
 import eu.vinconafta.porovnajto.ui.screens.ItemScreen
 import eu.vinconafta.porovnajto.ui.screens.StoreScreen
-import eu.vinconafta.porovnajto.ui.screens.createItemScreen
 import eu.vinconafta.porovnajto.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -82,7 +81,8 @@ fun MainScreen(
                         topBarViewModel.setIsMain(true)
                     }
                     composable(TopBarSection.PRODUCTS.name) {
-                        ProductsList(navController = navController)
+                        val items by topBarViewModel.items.collectAsState()
+                        ProductList(items = items, navController = navController)
                         topBarViewModel.setIsMain(true)
                     }
                     /*composable(TopBarSection.PRODUCTS.name) {
@@ -146,7 +146,7 @@ fun MainScreen(
                     composable(
                         route = "createitem"
                     ) {
-                        createItemScreen(navController= navController)
+                        CreateItemScreen(navController= navController)
 
                         topBarViewModel.setIsMain(false)
                     }

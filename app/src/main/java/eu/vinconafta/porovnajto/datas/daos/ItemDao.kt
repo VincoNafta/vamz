@@ -10,12 +10,24 @@ import eu.vinconafta.porovnajto.datas.entities.Category
 import eu.vinconafta.porovnajto.datas.entities.Item
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Rozhranie popisujuce akcie nad DB pre ORM mapovanie s entitou Item (položka)
+ *  @author Marek Štefanča
+ */
 @Dao
 interface ItemDao {
 
+    /**
+     * Funkcia ktorá vráti všetky predmety
+     * @return zoznam predmetov
+     */
     @Query("SELECT * FROM items")
     fun getAll(): Flow<List<Item>>
 
+    /**
+     * funkcia slúži na vrátenie všetkých predmetov v danej kategoriri
+     * @return
+     */
     @Query("SELECT * FROM items where refToCategory = :categoryId")
     fun getAllInCategory(categoryId: Int) : Flow<List<Item>>
 

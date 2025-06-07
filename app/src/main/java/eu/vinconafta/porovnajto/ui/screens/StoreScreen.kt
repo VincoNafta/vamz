@@ -29,6 +29,16 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import eu.vinconafta.porovnajto.datas.entities.StoreItem
 
+/**
+ * Obrazovka kde su zobrazené obchody
+ *  @author Marek Štefanča
+ */
+
+/**
+ * Metoda ktora zobrazi jednu kartu s možnosťou kliknuť
+ * @param item referencia na obchod
+ * @param navController referencia na navConroller
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardWithImageAndText(item: StoreItem, navController: NavController) {
@@ -77,6 +87,12 @@ fun CardWithImageAndText(item: StoreItem, navController: NavController) {
     }
 }
 
+/**
+ * Metoda ktorá vykreslí obrazovku
+ * @param cardItems kolekcia obchodov ktore sa maju zobraziť
+ * @param navController referencia na navConroller
+ * @param modifier referenia na modifier
+ */
 @Composable
 fun StoreScreen(cardItems: List<StoreItem>, navController: NavController, modifier: Modifier = Modifier) {
     LazyVerticalGrid(

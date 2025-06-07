@@ -31,9 +31,19 @@ import eu.vinconafta.porovnajto.datas.entities.StoreItem
 import eu.vinconafta.porovnajto.mvvms.FormItemViewModel
 
 
+/**
+ * Súbor popisujúci zobrazenie obrazovky s formulárom
+ * @author Marek Štefanča
+ */
 
+/**
+ * Funkcia slúžiaca na vykreslenie  obrazovky s formulárom
+ * @param insertFormUi referencia na viewmodel
+ * @param navController referencia na navcontroleer
+ * @param modifier referencia na modifier
+ */
 @Composable
-fun createItemScreen(
+fun CreateItemScreen(
     insertFormUi: FormItemViewModel = viewModel(),
     navController: NavController,
     modifier: Modifier = Modifier
@@ -98,6 +108,11 @@ fun createItemScreen(
     }
 }
 
+
+/**
+ * Komponent ktorý zobrazuje dropdown menu, na vytvorenie tohto dokumentu pomohol ujo chat
+ * @param viewModel referencia na viewmodel
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StoreDropdown(viewModel: FormItemViewModel) {

@@ -1,3 +1,7 @@
+/**
+ * Datova trieda popisujúca dané položky vo formulári
+ * @param Marek Štefanča
+ */
 data class InsertItemFormUiState(
     val itemName: String = "",
     val producer: String = "",

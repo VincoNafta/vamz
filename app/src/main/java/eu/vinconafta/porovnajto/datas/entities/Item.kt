@@ -8,6 +8,10 @@ import eu.vinconafta.porovnajto.R
 import kotlinx.parcelize.Parcelize
 
 
+/**
+ * Db entita Item ORM framerowku
+ * @author Marek Štefanča
+ */
 @Entity(tableName = "items")
 data class Item(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
