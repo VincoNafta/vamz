@@ -38,22 +38,17 @@ import eu.vinconafta.porovnajto.datas.entities.Item
  */
 @Composable
 fun ProductItem(item: Item, navController: NavController) {
-    ListItem(
-        headlineContent = {
-            Text(text = item.name)
-        },
-        modifier = Modifier
-            .padding(8.dp)
-            .border(
-                width = 1.dp,
-                color = Color.Gray,
-                shape = RoundedCornerShape(8.dp)
-            )
-            .clickable {
-                navController.navigate("item/${item.id}")
-            }
-            .padding(8.dp)
-    )
+    ListItem(headlineContent = {
+        Text(text = item.name)
+    }, modifier = Modifier
+        .padding(8.dp)
+        .border(
+            width = 1.dp, color = Color.Gray, shape = RoundedCornerShape(8.dp)
+        )
+        .clickable {
+            navController.navigate("item/${item.id}")
+        }
+        .padding(8.dp))
 }
 
 /**
@@ -65,25 +60,21 @@ fun ProductItem(item: Item, navController: NavController) {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ProductList(
-    items: List<Item>,
-    navController: NavController,
-    modifier: Modifier = Modifier
+    items: List<Item>, navController: NavController, modifier: Modifier = Modifier
 ) {
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(onClick = {
-                // akcia
                 navController.navigate("createitem")
             }) {
                 Icon(Icons.Default.Add, contentDescription = "Add")
             }
-        },
-        floatingActionButtonPosition = FabPosition.End
+        }, floatingActionButtonPosition = FabPosition.End
     ) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 30.dp, bottom = 80.dp), // vlastný padding pre FAB
+                .padding(top = 30.dp, bottom = 80.dp),
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
         ) {
             items(items) { item ->
