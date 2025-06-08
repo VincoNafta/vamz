@@ -14,8 +14,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import eu.vinconafta.porovnajto.mvvms.TopBarViewModel
 import eu.vinconafta.porovnajto.ui.TopBarSection
-import eu.vinconafta.porovnajto.ui.components.lists.CategoryList
-import eu.vinconafta.porovnajto.ui.components.lists.ProductList
+import eu.vinconafta.porovnajto.ui.components.CategoryList
+import eu.vinconafta.porovnajto.ui.components.ProductList
 import eu.vinconafta.porovnajto.ui.screens.CreateItemScreen
 import eu.vinconafta.porovnajto.ui.screens.ItemScreen
 import eu.vinconafta.porovnajto.ui.screens.StoreScreen

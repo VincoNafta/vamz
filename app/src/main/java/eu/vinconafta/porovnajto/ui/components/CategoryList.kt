@@ -1,4 +1,4 @@
-package eu.vinconafta.porovnajto.ui.components.lists
+package eu.vinconafta.porovnajto.ui.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable

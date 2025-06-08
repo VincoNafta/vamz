@@ -1,4 +1,4 @@
-package eu.vinconafta.porovnajto.ui.components.lists
+package eu.vinconafta.porovnajto.ui.components
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.border
