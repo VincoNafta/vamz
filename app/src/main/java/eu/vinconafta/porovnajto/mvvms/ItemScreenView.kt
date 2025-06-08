@@ -1,22 +1,14 @@
 package eu.vinconafta.porovnajto.mvvms
 
 import android.app.Application
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.viewModelScope
+import eu.vinconafta.porovnajto.datas.Rooms.AppDatabase
 import eu.vinconafta.porovnajto.datas.entities.Currency
 import eu.vinconafta.porovnajto.datas.entities.Item
 import eu.vinconafta.porovnajto.datas.entities.Price
 import eu.vinconafta.porovnajto.datas.entities.StoreItem
-import eu.vinconafta.porovnajto.datas.Rooms.AppDatabase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
-import eu.vinconafta.porovnajto.R
-import java.lang.StringBuilder
 
 /**
  * Trieda slúžiaca na prepojenie frontendu a backendu pre Zobrazenie ItemScreenView
