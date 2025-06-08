@@ -56,6 +56,13 @@ interface PriceDao {
             "where isp.refToPrice = :priceId and isp.refToItem = :itemId")
     fun getStoreByPriceItem(priceId: Int, itemId: Int): Flow<StoreItem?>
 
+
+    /**
+     * Funkcia ktorá vracia referenčnú tabulku pre ostatné predmety
+     */
+    @Query("SELECT * FROM itemstoreprice isp where isp.refToItem =:itemId and isp.refToPrice <> :priceId")
+    fun getReferences(itemId: Int, priceId: Int): Flow<List<ItemStorePrice>>
+
     /**
      * Funkcia ktorá slúži na vloženie záznamu do referenčnej tabuľky ItemStorePrice
      * @param storePrice referencia na ItemStorePrice

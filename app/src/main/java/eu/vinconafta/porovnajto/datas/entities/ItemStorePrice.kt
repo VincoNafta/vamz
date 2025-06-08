@@ -13,4 +13,6 @@ data class ItemStorePrice(
     val refToStore: Int,
     val refToPrice: Int,
     val refToItem: Int
-)
+) {
+
+}

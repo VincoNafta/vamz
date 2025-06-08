@@ -15,6 +15,13 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface StoreDao {
     /**
+     * Funkica ktorá vráti pravdepodovne 1 obchod na základe id
+     * @param storeId id obchodu
+     * @return 1 výsledok alebo NULL
+     */
+    @Query("select * from store where id= :storeId")
+    fun getOnce(storeId: Int): Flow<StoreItem?>
+    /**
      * Funkcia ktorá vráti kolekciu všetkých obchodov
      * @return Kolekcia obchodov
      */

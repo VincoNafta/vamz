@@ -16,4 +16,5 @@
     <string name="loadingPrice">Načitávam Cenu...</string>
     <string name="loadingCurrency">Načitávam Menu...</string>
     <string name="noImage">Nedostupný obrázok</string>
+    <string name="noOtherItems">Produkt sa nepodarilo nájsť v iných obchodoch</string>
 </resources>

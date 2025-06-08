@@ -11,8 +11,10 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -147,11 +149,18 @@ fun ItemScreen(
                     fontSize = 15.sp,
                     modifier = Modifier.padding(top = 12.dp)
                 )
-                Text(
-                    text = "- TESCO (0,69)\n" +
-                            "- BILLA (0,64)\n" +
-                            "- KAUFLAND (0,60€)\n"
-                )
+
+                val offersText = remember { mutableStateOf("Načítavam...") }
+
+                LaunchedEffect(itemId) {
+                    val result = viewModel.getOtherOffers(itemId)
+                    offersText.value = result
+                }
+                if (offersText.value.isEmpty()) {
+                    offersText.value = stringResource(id = R.string.noOtherItems)
+                }
+
+                Text(text = offersText.value)
             }
         }
     }
