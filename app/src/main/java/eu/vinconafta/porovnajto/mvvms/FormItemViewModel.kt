@@ -15,6 +15,8 @@ import eu.vinconafta.porovnajto.datas.entities.StoreItem
 import eu.vinconafta.porovnajto.datas.Rooms.AppDatabase
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -93,9 +95,31 @@ class FormItemViewModel(application: Application) : AndroidViewModel(application
         }
 
         viewModelScope.launch {
-            val insertedId = db.priceDao().insert(Price(currencyId = 1, price = priceValue)).toInt()
-            val newItemId = db.itemDao().insertItem(Item(name = formState.itemName, producer = formState.producer, icon = formState.itemName.lowercase(), refToCategory = 1))
-            db.priceDao().insertStorePrice(ItemStorePrice(refToPrice = insertedId, refToStore = formState.storeId, refToItem = newItemId.toInt()))
+            val insertedPriceId = db.priceDao().insert(Price(currencyId = 1, price = priceValue)).toInt()
+
+            val existingItem = db.itemDao().getItemByName(formState.itemName).firstOrNull()
+
+            val itemId = if (existingItem != null) {
+                existingItem.id
+            } else {
+                val newItemId = db.itemDao().insertItem(
+                    Item(
+                        name = formState.itemName,
+                        producer = formState.producer,
+                        icon = formState.itemName.lowercase(),
+                        refToCategory = 1
+                    )
+                )
+                newItemId.toInt()
+            }
+
+            db.priceDao().insertStorePrice(
+                ItemStorePrice(
+                    refToPrice = insertedPriceId,
+                    refToStore = formState.storeId,
+                    refToItem = itemId
+                )
+            )
         }
 
         navController.popBackStack()

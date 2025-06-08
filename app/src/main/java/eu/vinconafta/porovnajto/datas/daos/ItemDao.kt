@@ -31,6 +31,9 @@ interface ItemDao {
     @Query("SELECT * FROM items where refToCategory = :categoryId")
     fun getAllInCategory(categoryId: Int) : Flow<List<Item>>
 
+    /**
+     * funkcia vráti všetky kategorie pre daný obchod
+     */
     @Query("SELECT c.* FROM STORE s " +
             "join ItemStorePrice isp on (isp.refToStore = s.id) " +
             "join items i on i.id = isp.refToItem " +
@@ -39,15 +42,36 @@ interface ItemDao {
             "group by c.id")
     fun getCategoriesInStore(storeId: Int): Flow<List<Category>>
 
+
+    /**+
+     * Funkcia vráti pravdepodobne 1 výsledok na základe mena predmetu
+     */
+    @Query("SELECT * FROM ITEMS WHERE name LIKE :itemName LIMIT 1")
+    fun getItemByName(itemName: String): Flow<Item?>
+
+
+    /**
+     * Funkcia vráti pravdepodobne 1 výsledok na základe Id predmetu
+     */
     @Query("SELECT * FROM items where id = :itemId")
     fun getId(itemId: Int): Flow<Item?>
 
+    /**
+     * Funkcia vloží predmet do DB
+     * @return Id vytvoreného predmetu
+     */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertItem(item: Item): Long
 
+    /**
+     * Funkcia zmaže vybraný predmet
+     */
     @Delete
     suspend fun deleteItem(item: Item)
 
+    /**
+     * Funkcia zmaže všetky predmety
+     */
     @Query("DELETE FROM items")
     suspend fun deleteAll()
 }
